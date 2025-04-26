@@ -1,13 +1,14 @@
-public class Semis //semis que le joueur possede
+public class Semis
 {
     public string NomPlante { get; set; }
-    public int Prix { get; set; }
+    public int PrixAchat { get; set; }
     public int Quantite { get; set; }
 
-    public Semis(string nomPlante, int prix, int quantite)
+
+    public Semis(string nomPlante, int prix, int quantite=0)
     {
         NomPlante = nomPlante;
-        Prix = prix;
+        PrixAchat = prix;
         Quantite = quantite;
     }
 }
