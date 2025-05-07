@@ -123,7 +123,21 @@ public class Joueur
        if (parcelle.Plante != null && !parcelle.Plante.EstMorte && parcelle.Plante.Croissance >= 100)
         {
             Console.WriteLine($"{parcelle.Plante.Nom} récoltée depuis la parcelle {parcelle.NumeroParcelle}.");
-            MesRecoltes.Add(new Recoltes(parcelle.Plante.Nom, 1));  //à ajuster quand y'a plusieurs produits pour une récolte
+            int quantiteRecolte = parcelle.Plante.AvoirQuantiteRecolte();
+            bool trouveDansRecolte = false;
+
+            foreach (var recolte in MesRecoltes)
+            {
+                if (recolte.TypePlante == parcelle.Plante.Nom)
+                {
+                    recolte.Quantite += quantiteRecolte;   //à ajuster quand y'a plusieurs produits pour une récolte
+                    trouveDansRecolte = true;
+                }
+            }
+            if (!trouveDansRecolte)
+            {
+                MesRecoltes.Add(new Recoltes(parcelle.Plante.Nom, 1));  //à ajuster quand y'a plusieurs produits pour une récolte
+            }
             parcelle.Plante = null;  // Réinitialise la parcelle
         }
         else
