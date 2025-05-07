@@ -15,13 +15,13 @@ public class Magasin
         SemisDisponible=new List<Semis>
         {
             new Semis("Tomate",5) //nom et prix
-        }
+        };
 
 
         OutilsDisponible=new List<Outils>
         {
             new Outils("Bâche",5) //nom et prix
-        }
+        };
     }
 
 

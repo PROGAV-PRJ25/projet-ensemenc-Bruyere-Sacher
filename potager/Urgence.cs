@@ -2,7 +2,7 @@ public class Urgence
 {
 
 
-    public string type { get; set; }
+    public string? type { get; set; }
     public int Gravité { get; set; } //echelle de 1 a 5
     public bool ProblemeResolu { get; set; }
 
