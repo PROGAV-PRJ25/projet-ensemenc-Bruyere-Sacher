@@ -28,13 +28,10 @@ public class Parcelle
         {
             Plante = plante;
             plante.IdParcelle = this;
+            Console.WriteLine($"la {plante} a bien été ajouté à la parcelle numéro {NumeroParcelle}");
         }
         else
             Console.WriteLine($"Parcelle {NumeroParcelle} est déjà occupée !");
-    }
-    public void RecolterPlante()
-    {
-        
     }
     public void ProtegerParcelle()
     {

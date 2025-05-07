@@ -1,4 +1,4 @@
-public class Terrain
+public abstract class Terrain
 {
     public string Type {get; set;}
     public int Humidite {get; set;}
@@ -21,11 +21,8 @@ public class Terrain
     }
 
 
-    // public virtual void MiseAJourCondition()
-    // {
-    //         //laisser vide puis adapter a chqua sous classe avec override
-    // }
-
-
-    // Est compatible
+    public virtual void MiseAJourCondition()
+    {
+        //laisser vide puis adapter a chqua sous classe avec override
+    }
 }
