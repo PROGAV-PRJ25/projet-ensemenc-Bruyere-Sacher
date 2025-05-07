@@ -33,8 +33,16 @@ public abstract class Plante
 
     public override string ToString()
     {
-        string message=$"{Nom} | Santé: {Sante}% | Croissance: {Croissance}%";;
-        return message;
+        string description="";
+        if (EstMorte==false)
+        {
+            description=$"{Nom} | Santé: {Sante}% | Croissance: {Croissance}%";
+        }
+        else
+        {
+            description=$"{Nom} est morte";
+        }
+        return description;
     }
 
     public virtual void AnalyserSante(int tempActuelle, int humiditeActuelle, int luminositeActuelle)

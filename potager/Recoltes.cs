@@ -1,4 +1,4 @@
-pulbic class Recoltes
+public class Recoltes
 {
     public string TypePlante { get; set; }
     public int Quantite { get; set; }
