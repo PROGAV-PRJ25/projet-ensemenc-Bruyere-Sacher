@@ -47,52 +47,55 @@ public abstract class Plante
 
     public virtual void AnalyserSante(int tempActuelle, int humiditeActuelle, int luminositeActuelle)
     {
-        if (tempActuelle < TemperaturePrefere - 3 || tempActuelle > TemperaturePrefere+3)
-            Sante -= 10;
-
-        int ecartEau = Math.Abs(BesoinEau - humiditeActuelle);
-        if (ecartEau >= 10)
-            Sante -= 10;
-
-        int ecartSoleil = Math.Abs(BesoinLumiere - luminositeActuelle);
-        if (ecartSoleil >= 10)
-            Sante -= 10;
-
-        Sante = Math.Max(Sante, 0);
-
         // Vérification des conditions préférées
+        //Temperature
         int conditionsRemplies = 0;
-        if (tempActuelle >= TemperaturePrefere-3 && tempActuelle <= TemperaturePrefere+3)
+        if (tempActuelle >= TemperaturePrefere - 3 && tempActuelle <= TemperaturePrefere + 3)
         {
             conditionsRemplies++;
         }
+        else
+        {
+            Sante -= 10;
+        }
 
-        if (ecartEau < 10) 
+        //Humidité
+        int ecartEau = Math.Abs(BesoinEau - humiditeActuelle);
+        if (ecartEau < 10)
         {
             conditionsRemplies++;
-            Age+=1;
         }
-        if (ecartSoleil < 10) 
+        else
+        {
+            Sante -= 10;
+        }
+
+        //Luminosité
+        int ecartLumiere = Math.Abs(BesoinLumiere - luminositeActuelle);
+        if (ecartLumiere < 10)
         {
             conditionsRemplies++;
         }
-
-        double tauxReussi = conditionsRemplies *100/ 3;
-        if (tauxReussi < 50)
+        else
         {
-            Sante=0;
+            Sante -= 10;
         }
 
-        if (ecartSoleil == 0)
+        double tauxConditions = (conditionsRemplies * 100.0) / 3;
+        if (tauxConditions < 50)
         {
-            Age+=1;
+            Sante = 0;
         }
-        Age+=1;
 
+        Age+=conditionsRemplies; // accélerer la croissance si les conditions sont rempli
+
+        Sante = Math.Max(Sante, 0); // Si santé inférieur à 0 -> ramener la santé a 0%
+        //Si 0 de santé -> plante morte 
         if (Sante==0)
         {
             EstMorte=true;
         }
-        //ajuster les regles
     }
+    public abstract int AvoirQuantiteRecolte();
+    
 }
