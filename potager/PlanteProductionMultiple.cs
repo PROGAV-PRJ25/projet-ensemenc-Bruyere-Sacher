@@ -5,6 +5,19 @@ public class PlanteProductionMultiple : Plante
     {
     
     }
+    public override string ToString()
+    {
+        string description="";
+        if (EstMorte==false)
+        {
+            description=$"{Nom} | Santé: {Sante}% | Croissance: {Croissance}% | Nombres de produits: {NombreProduit}%";
+        }
+        else
+        {
+            description=$"{Nom} est morte";
+        }
+        return description;
+    }
 
     public override void AnalyserSante(int tempActuelle, int humiditeActuelle, int luminositeActuelle)
     {

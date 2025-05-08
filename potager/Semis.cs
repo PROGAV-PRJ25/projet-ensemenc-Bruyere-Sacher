@@ -6,7 +6,7 @@ public class Semis
     public bool EstProductionMultiple { get; set; }
 
 
-    public Semis(string nomPlante, int prix, int quantite=0, bool estProductionMultiple)
+    public Semis(string nomPlante, int prix,bool estProductionMultiple, int quantite=0)
     {
         NomPlante = nomPlante;
         PrixAchat = prix;
