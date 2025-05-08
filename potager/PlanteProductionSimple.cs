@@ -4,11 +4,19 @@ public class PlanteProductionSimple : Plante
     {
 
     }
-    public override void AnalyserSante(int tempActuelle, int humiditeActuelle, int luminositeActuelle)
+    public override string ToString()
     {
-        base.AnalyserSante(tempActuelle, humiditeActuelle, luminositeActuelle); //Appel de la logique de base de la classe Plante
+        string description="";
+        if (EstMorte==false)
+        {
+            description=$"{Nom} | Santé: {Sante}% | Croissance: {Croissance}%";
+        }
+        else
+        {
+            description=$"{Nom} est morte";
+        }
+        return description;
     }
-    
     public override int AvoirQuantiteRecolte()
     {
         return 1;

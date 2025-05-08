@@ -7,7 +7,7 @@ public class Magasin
     private Joueur joueur;
 
 
-    public Magasin ( int prixTerrain = 100, int prixParcelle=25, Joueur joueur) //adapter les prix
+    public Magasin (Joueur joueur, int prixTerrain = 100, int prixParcelle=25) //adapter les prix
     {
         PrixTerrain=prixTerrain;
         PrixParcelle=prixParcelle;
@@ -60,7 +60,7 @@ public class Magasin
                 return;
         }
 
-        if (Joueur.Argent >= prixTerrain)
+        if (joueur.Argent >= prixTerrain)
         {
             joueur.Argent -= prixTerrain;
             joueur.Terrains.Add(terrain);
@@ -92,11 +92,11 @@ public class Magasin
         string nomSemis = Console.ReadLine()!;
 
         Semis? semisChoisi = null;
-        foreach (var semis in SemisDisponible)
+        foreach (var semis2 in SemisDisponible)
         {
-            if (semis.NomPlante == nomSemis)
+            if (semis2.NomPlante == nomSemis)
             {
-                semisChoisi = semis;
+                semisChoisi = semis2;
             }
         }
 
@@ -145,7 +145,7 @@ public class Magasin
         }
 
         joueur.Argent -= outilChoisi.PrixAchat;
-        joueur.InventaireOutils.Add(outilChoisi);
+        joueur.StockOutils.Add(outilChoisi);
 
         Console.WriteLine($"Tu as acheté : {outilChoisi.NomOutil} pour {outilChoisi.PrixAchat} pièces.");
     }

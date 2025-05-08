@@ -36,7 +36,7 @@ public abstract class Plante
         string description="";
         if (EstMorte==false)
         {
-            description=$"{Nom} | Santé: {Sante}% | Croissance: {Croissance}%";
+            description=$"";
         }
         else
         {
@@ -44,7 +44,6 @@ public abstract class Plante
         }
         return description;
     }
-
     public virtual void AnalyserSante(int tempActuelle, int humiditeActuelle, int luminositeActuelle)
     {
         // Vérification des conditions préférées

@@ -1,13 +1,13 @@
 public class Outils
 {
-    public string NomOutils { get; set; }
+    public string NomOutil { get; set; }
     public int PrixAchat { get; set; }
     public int Quantite { get; set; }
 
 
     public Outils(string nomOutils, int prix, int quantite=0)
     {
-        NomOutils = nomOutils;
+        NomOutil = nomOutils;
         PrixAchat = prix;
         Quantite = quantite;
     }
