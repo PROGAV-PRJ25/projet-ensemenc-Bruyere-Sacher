@@ -87,7 +87,7 @@ public class Urgence
     }
 
     // Méthode pour permettre au joueur de protéger le terrain
-    private void ProtégerTerrain(Joueur joueur, Parcelle parcelleTouchee, Magasin magasin)
+    private void ProtegerTerrain(Joueur joueur, Parcelle parcelleTouchee, Magasin magasin)
     {
         string reponse = string.Empty;
         do
