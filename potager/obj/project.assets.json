@@ -8,19 +8,19 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\sarah\\.nuget\\packages\\": {}
+    "C:\\Users\\jujus\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\sarah\\OneDrive\\Documents\\ENSC\\1A\\S6\\programmation\\Projet\\projet-ensemenc-Bruyere-Sacher\\potager\\potager.csproj",
+      "projectUniqueName": "C:\\Users\\jujus\\OneDrive\\Documents\\Etudes sup\\ENSC\\S6\\C#\\Projet Potager\\projet-ensemenc-Bruyere-Sacher\\potager\\potager.csproj",
       "projectName": "potager",
-      "projectPath": "C:\\Users\\sarah\\OneDrive\\Documents\\ENSC\\1A\\S6\\programmation\\Projet\\projet-ensemenc-Bruyere-Sacher\\potager\\potager.csproj",
-      "packagesPath": "C:\\Users\\sarah\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\sarah\\OneDrive\\Documents\\ENSC\\1A\\S6\\programmation\\Projet\\projet-ensemenc-Bruyere-Sacher\\potager\\obj\\",
+      "projectPath": "C:\\Users\\jujus\\OneDrive\\Documents\\Etudes sup\\ENSC\\S6\\C#\\Projet Potager\\projet-ensemenc-Bruyere-Sacher\\potager\\potager.csproj",
+      "packagesPath": "C:\\Users\\jujus\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\jujus\\OneDrive\\Documents\\Etudes sup\\ENSC\\S6\\C#\\Projet Potager\\projet-ensemenc-Bruyere-Sacher\\potager\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\sarah\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\jujus\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -64,7 +64,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.401/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.407/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

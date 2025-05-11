@@ -13,3 +13,18 @@ C:\Users\sarah\OneDrive\Documents\ENSC\1A\S6\programmation\Projet\projet-ensemen
 C:\Users\sarah\OneDrive\Documents\ENSC\1A\S6\programmation\Projet\projet-ensemenc-Bruyere-Sacher\potager\obj\Debug\net8.0\potager.pdb
 C:\Users\sarah\OneDrive\Documents\ENSC\1A\S6\programmation\Projet\projet-ensemenc-Bruyere-Sacher\potager\obj\Debug\net8.0\potager.genruntimeconfig.cache
 C:\Users\sarah\OneDrive\Documents\ENSC\1A\S6\programmation\Projet\projet-ensemenc-Bruyere-Sacher\potager\obj\Debug\net8.0\ref\potager.dll
+C:\Users\jujus\OneDrive\Documents\Etudes sup\ENSC\S6\C#\Projet Potager\projet-ensemenc-Bruyere-Sacher\potager\obj\Debug\net8.0\potager.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\jujus\OneDrive\Documents\Etudes sup\ENSC\S6\C#\Projet Potager\projet-ensemenc-Bruyere-Sacher\potager\obj\Debug\net8.0\potager.AssemblyInfoInputs.cache
+C:\Users\jujus\OneDrive\Documents\Etudes sup\ENSC\S6\C#\Projet Potager\projet-ensemenc-Bruyere-Sacher\potager\obj\Debug\net8.0\potager.AssemblyInfo.cs
+C:\Users\jujus\OneDrive\Documents\Etudes sup\ENSC\S6\C#\Projet Potager\projet-ensemenc-Bruyere-Sacher\potager\obj\Debug\net8.0\potager.csproj.CoreCompileInputs.cache
+C:\Users\jujus\OneDrive\Documents\Etudes sup\ENSC\S6\C#\Projet Potager\projet-ensemenc-Bruyere-Sacher\potager\obj\Debug\net8.0\potager.sourcelink.json
+C:\Users\jujus\OneDrive\Documents\Etudes sup\ENSC\S6\C#\Projet Potager\projet-ensemenc-Bruyere-Sacher\potager\obj\Debug\net8.0\potager.dll
+C:\Users\jujus\OneDrive\Documents\Etudes sup\ENSC\S6\C#\Projet Potager\projet-ensemenc-Bruyere-Sacher\potager\obj\Debug\net8.0\refint\potager.dll
+C:\Users\jujus\OneDrive\Documents\Etudes sup\ENSC\S6\C#\Projet Potager\projet-ensemenc-Bruyere-Sacher\potager\obj\Debug\net8.0\potager.pdb
+C:\Users\jujus\OneDrive\Documents\Etudes sup\ENSC\S6\C#\Projet Potager\projet-ensemenc-Bruyere-Sacher\potager\bin\Debug\net8.0\potager.exe
+C:\Users\jujus\OneDrive\Documents\Etudes sup\ENSC\S6\C#\Projet Potager\projet-ensemenc-Bruyere-Sacher\potager\bin\Debug\net8.0\potager.deps.json
+C:\Users\jujus\OneDrive\Documents\Etudes sup\ENSC\S6\C#\Projet Potager\projet-ensemenc-Bruyere-Sacher\potager\bin\Debug\net8.0\potager.runtimeconfig.json
+C:\Users\jujus\OneDrive\Documents\Etudes sup\ENSC\S6\C#\Projet Potager\projet-ensemenc-Bruyere-Sacher\potager\bin\Debug\net8.0\potager.dll
+C:\Users\jujus\OneDrive\Documents\Etudes sup\ENSC\S6\C#\Projet Potager\projet-ensemenc-Bruyere-Sacher\potager\bin\Debug\net8.0\potager.pdb
+C:\Users\jujus\OneDrive\Documents\Etudes sup\ENSC\S6\C#\Projet Potager\projet-ensemenc-Bruyere-Sacher\potager\obj\Debug\net8.0\potager.genruntimeconfig.cache
+C:\Users\jujus\OneDrive\Documents\Etudes sup\ENSC\S6\C#\Projet Potager\projet-ensemenc-Bruyere-Sacher\potager\obj\Debug\net8.0\ref\potager.dll

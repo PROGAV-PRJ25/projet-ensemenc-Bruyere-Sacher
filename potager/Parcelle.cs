@@ -7,6 +7,7 @@ public class Parcelle
     public int HumiditeParcelle {get; set;}
     public int EnsoleillementParcelle {get; set;}
     public bool EstProtegee {get; set;}
+    public Urgence? UrgenceAssociee { get; set; }
     public Parcelle(int numero, Terrain terrain)
     {
         NumeroParcelle = numero;
@@ -33,8 +34,5 @@ public class Parcelle
         else
             Console.WriteLine($"Parcelle {NumeroParcelle} est déjà occupée !");
     }
-    public void ProtegerParcelle()
-    {
-        
-    }
+
 }
