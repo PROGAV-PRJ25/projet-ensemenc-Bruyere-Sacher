@@ -1,11 +1,11 @@
 public class Urgence
 {
     public string? TypeUrgenceDeclenchee { get; set; }
-    public int Gravité { get; set; } // échelle de 1 à 5
+    public int Gravite { get; set; } // échelle de 1 à 5
     public bool ProblemeResolu { get; set; }
     private Random random = new Random(); // Instancier Random de manière privée
-    public int ChanceDeSurvenir { get; set; } = 20; // 20% de chance pour qu'une urgence survienne
-    public int SemainesNonRésolue { get; private set; } = 0; // pour gérer la double temporalité
+    public int ChanceDeSurvenir { get; set; } = 10; // 20% de chance pour qu'une urgence survienne
+    public int SemainesNonResolue { get; private set; } = 0; // pour gérer la double temporalité
 
     public Urgence()
     {
@@ -20,7 +20,7 @@ public class Urgence
         if (chance <= ChanceDeSurvenir) // Si le nombre généré est inférieur ou égal à la chance de survenir
         {
             TypeUrgenceDeclenchee = TypeUrgence();
-            Gravité = random.Next(1, 6); // Choisir un niveau de gravité entre 1 et 5
+            Gravite = random.Next(1, 6); // Choisir un niveau de gravité entre 1 et 5
             ProblemeResolu = false; // Le problème n'est pas encore résolu
             AfficherAlerte(); // Avertir le joueur
         }
@@ -29,24 +29,24 @@ public class Urgence
     // Affiche une alerte pour l'urgence déclenchée
     public void AfficherAlerte()
     {
-        Console.WriteLine($"🚨 URGENCE ! : Il y a un problème de type {TypeUrgenceDeclenchee.ToUpper()} avec une gravité de {Gravité}.");
+        Console.WriteLine($"🚨 URGENCE ! : Il y a un problème de type {TypeUrgenceDeclenchee.ToUpper()} avec une gravité de {Gravite}.");
     }
 
     // Méthode pour choisir un type d'urgence aléatoire
     private string TypeUrgence()
     {
-        string[] typesUrgence = { "Parasites", "Oiseaux", "Grêle" };
+        string[] typesUrgence = { "Pacari (cochon sauvage)", "Oiseaux", "Grêle" };
         int typeUrgence = random.Next(typesUrgence.Length); // Choisir un type d'urgence parmi les trois
         return typesUrgence[typeUrgence];
     }
 
     // Si l'urgence n'est pas résolue, on l'empire avec le temps
-    public void EmpirerSiNonRésolue()
+    public void EmpirerSiNonResolue()
     {
         if (!ProblemeResolu)
         {
-            SemainesNonRésolue++;
-            Gravité = Math.Min(5, Gravité + 1); // La gravité augmente, mais ne dépasse pas 5
+            SemainesNonResolue++;
+            Gravite = Math.Min(5, Gravite + 1); // La gravité augmente, mais ne dépasse pas 5
         }
     }
 
@@ -54,7 +54,7 @@ public class Urgence
     public void ResetUrgence()
     {
         ProblemeResolu = true;
-        SemainesNonRésolue = 0;
+        SemainesNonResolue = 0;
         TypeUrgenceDeclenchee = null;
     }
 
@@ -65,10 +65,10 @@ public class Urgence
         // Si l'urgence est toujours en cours, on traite la situation
         if (!ProblemeResolu)
         {
-            Console.WriteLine($"TESTTT {TypeUrgenceDeclenchee} est survenue sur la parcelle {parcelleTouchee.NumeroParcelle}.");
+            Console.WriteLine($" {TypeUrgenceDeclenchee} est survenue sur la parcelle {parcelleTouchee.NumeroParcelle}.");
 
             // Empêcher la plante de se détériorer selon la gravité de l'urgence
-            int perteDeSante = Gravité * 5;
+            int perteDeSante = Gravite * 5;
             parcelleTouchee.Plante.Sante -= perteDeSante;
 
             if (parcelleTouchee.Plante.Sante <= 0)
@@ -78,7 +78,7 @@ public class Urgence
             }
 
             // Demander si le joueur veut protéger le terrain
-            ProtégerTerrain(joueur, parcelleTouchee, magasin);
+            ProtegerTerrain(joueur, parcelleTouchee, magasin);
         }
         else
         {
@@ -121,12 +121,13 @@ public class Urgence
                     Console.WriteLine("Entrez le numéro de l'outil que vous voulez utiliser, ou tapez '0' pour annuler.");
                     choix = Console.ReadLine()?.ToLower();
 
+
                     if (choix != "0" && int.TryParse(choix, out choixOutil) && choixOutil > 0 && choixOutil <= joueur.StockOutils.Count)
                     {
                         Outils outilChoisi = joueur.StockOutils[choixOutil - 1];
 
                         // Vérifier si l'outil est un outil de protection
-                        if (outilChoisi.NomOutil == "Bâche ☂️​" || outilChoisi.NomOutil == "Clôture 🚧 " || outilChoisi.NomOutil == "Epouventail ​⛄​")
+                        if (outilChoisi.NomOutil == "Bâche​" || outilChoisi.NomOutil == "Bache"|| outilChoisi.NomOutil == "Clôture " || outilChoisi.NomOutil == "Cloture"|| outilChoisi.NomOutil == "Epouventail​")
                         {
                             joueur.Terrains[0].ProtegerTerrain();
                             ProblemeResolu = true;
@@ -160,7 +161,7 @@ public class Urgence
                 {
                     magasin.AcheterOutils();
 
-                    if (joueur.StockOutils.Any(o => o.NomOutil == "Bâche ☂️​" || o.NomOutil == "Clôture 🚧 " || o.NomOutil == "Epouventail ​⛄​"))
+                    if (joueur.StockOutils.Any(o => o.NomOutil == "Bache" || o.NomOutil == "Bâche" || o.NomOutil == "Clôture" || o.NomOutil == "Cloture"|| o.NomOutil == "Epouventail​"))
                     {
                         joueur.Terrains[0].ProtegerTerrain();
                         ProblemeResolu = true;

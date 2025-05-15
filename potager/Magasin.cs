@@ -14,24 +14,24 @@ public class Magasin
 
         SemisDisponible = new List<Semis>
         {
-            new Semis("Tomate 🍅", 3, true),
-            new Semis("Piment 🌶️", 4, true),
-            new Semis("Nopale 🌵", 6, false),
-            new Semis("Agave 🌵", 7, false),
-            new Semis("Pasteque 🍉", 5, false),
-            new Semis("Fleur de Tithonia 🌺", 6, false),
-            new Semis("Haricot 🫘", 2, true),
-            new Semis("Avocat 🥑", 8, true),
-            new Semis("Papaye 🥭", 7, true),
-            new Semis("Igname 🍠", 4, true)
+            new Semis("Tomate", 3, true),
+            new Semis("Piment", 4, true),
+            new Semis("Nopale", 6, false),
+            new Semis("Agave", 7, false),
+            new Semis("Pasteque", 5, false),
+            new Semis("Fleur de Tithonia", 6, false),
+            new Semis("Haricot", 2, true),
+            new Semis("Avocat", 8, true),
+            new Semis("Papaye", 7, true),
+            new Semis("Igname", 4, true)
         };
 
         OutilsDisponible = new List<Outils>
         {
-            new Outils("Bâche ☂️​", 10),
-            new Outils("Serre ⛺", 25),
-            new Outils("Epouventail ​⛄​", 8),
-            new Outils("Clôture 🚧 ", 15)
+            new Outils("Bâche​", 10),
+            new Outils("Serre", 25),
+            new Outils("Epouventail​", 8),
+            new Outils("Clôture", 15)
         };
     }
 
@@ -192,7 +192,7 @@ public class Magasin
             Console.WriteLine($"- {outil.NomOutil} ({outil.PrixAchat} pièces)");
         }
 
-        string nomOutil = Console.ReadLine()!;
+        string nomOutil = Console.ReadLine()!; 
         Outils outilChoisi = null;
 
         foreach (var o in OutilsDisponible)
@@ -219,5 +219,10 @@ public class Magasin
         joueur.Argent -= outilChoisi.PrixAchat;
         joueur.StockOutils.Add(outilChoisi);
         Console.WriteLine($"✅ Tu as acheté : {outilChoisi.NomOutil}");
+        Console.WriteLine("📦 Ton stock d'outils contient :");
+        foreach (var outil in joueur.StockOutils)
+        {
+            Console.WriteLine($"- {outil.NomOutil}");
+        }
     }
 }

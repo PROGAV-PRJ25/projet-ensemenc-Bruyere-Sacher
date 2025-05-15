@@ -68,3 +68,6 @@ joueur.Planter();
 
 // Lancer la simulation pour 5 semaines
 simulation.SimulerJeu(10);
+
+
+

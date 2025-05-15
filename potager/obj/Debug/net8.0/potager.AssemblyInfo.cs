@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("potager")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3fcdae90e379c3e782ced1f341ecd6466a7e7366")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f8726666af6c43048d025a5f215359e3e8cff4b8")]
 [assembly: System.Reflection.AssemblyProductAttribute("potager")]
 [assembly: System.Reflection.AssemblyTitleAttribute("potager")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

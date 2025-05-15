@@ -135,8 +135,7 @@ public class Simulation
                     Console.WriteLine($"🌱 Parcelle {parcelle.NumeroParcelle} sur terrain {terrain.Type} est vide.");
                 }
 
-             
-
+                parcelle.Plante = new PlanteProductionMultiple("Tomate", "Printemps", "Desertique", 20, 70, 80, 12, 1);
                 // Si l'urgence n'est pas encore associée, on en crée une nouvelle
                 if (parcelle.UrgenceAssociee == null)
                 {
