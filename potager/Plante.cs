@@ -13,9 +13,10 @@ public abstract class Plante
     public int Age {get; set;}  //en semaine
     public int Croissance {get; set;}  // en pourcentage
     public bool EstMorte {get; set;} // plante morte ou non
+    public int Prix {get; set;} //prix pour les vendre
     public Parcelle? IdParcelle { get; set; } // parcelle sur laquelle la plante est
 
-    public Plante(string nom, string saison, string terrainPref, int temp, int eau, int soleil, int tempsMure) 
+    public Plante(string nom, string saison, string terrainPref, int temp, int eau, int soleil, int tempsMure, int prix) 
     { 
         Nom=nom;
         SaisonSemis=saison;
@@ -28,6 +29,7 @@ public abstract class Plante
         Age=0;
         Croissance=(int)(Age/TempsDeMaturation*100); //quand 100% on peut recoleter
         EstMorte=false;
+        Prix=prix;
         //cas des maladies
     } 
 

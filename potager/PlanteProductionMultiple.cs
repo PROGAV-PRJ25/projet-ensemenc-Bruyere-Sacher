@@ -1,7 +1,7 @@
 public class PlanteProductionMultiple : Plante
 {
     public int NombreProduit {get; set;}
-    public PlanteProductionMultiple(string nom, string saison, string terrainPref, int temp, int eau, int soleil, int tempsMure,int nombreProduit=1) : base(nom, saison, terrainPref, temp, eau, soleil, tempsMure)
+    public PlanteProductionMultiple(string nom, string saison, string terrainPref, int temp, int eau, int soleil, int tempsMure,int prix,int nombreProduit=1) : base(nom, saison, terrainPref, temp, eau, soleil, tempsMure, prix)
     {
     
     }
