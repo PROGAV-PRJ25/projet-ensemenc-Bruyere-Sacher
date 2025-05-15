@@ -115,7 +115,7 @@ public class Simulation
 
     public void SimulerSemaine()
     {
-        Console.WriteLine($"\n📅 Semaine {Semaine} - Jardin de {Jardinier.Nom} - Argent: {Jardinier.Argent} pièces");
+        Console.WriteLine($"\n Semaine {Semaine} - Jardin de {Jardinier} - Argent: {Jardinier.Argent} pièces");
         
         Meteo.DefinirMeteoAleatoirement(); // météo aléatoire pour la semaine
         Console.WriteLine(Meteo.ToString());
@@ -135,15 +135,13 @@ public class Simulation
                     Console.WriteLine($"🌱 Parcelle {parcelle.NumeroParcelle} sur terrain {terrain.Type} est vide.");
                 }
 
-                parcelle.Plante = new PlanteProductionMultiple("Tomate", "Printemps", "Desertique", 20, 70, 80, 12, 1);
+                // -------------------------------Pour le mode Urgence----------------------------------
                 // Si l'urgence n'est pas encore associée, on en crée une nouvelle
                 if (parcelle.UrgenceAssociee == null)
                 {
                     parcelle.UrgenceAssociee = new Urgence();
                     parcelle.UrgenceAssociee.DeclencherAleatoirement();
-                    
                 }
-
                 // Gérer l'urgence associée à la parcelle si elle existe
                 if (parcelle.UrgenceAssociee != null && !parcelle.UrgenceAssociee.ProblemeResolu && parcelle.Plante != null && !parcelle.Plante.EstMorte)
                 {
@@ -164,10 +162,11 @@ public class Simulation
         {
             Console.WriteLine("\n📋 Que voulez-vous faire ?");
             Console.WriteLine("1. Arroser un terrain ou une parcelle");
-            Console.WriteLine("2. Acheter au magasin");
-            Console.WriteLine("3. Vendre les récoltes");
-            Console.WriteLine("4. Récolter une parcelle");
-            Console.WriteLine("5. Passer à la semaine suivante");
+            Console.WriteLine("2. Planter un semi");
+            Console.WriteLine("3. Acheter au magasin");
+            Console.WriteLine("4. Vendre les récoltes");
+            Console.WriteLine("5. Récolter une parcelle");
+            Console.WriteLine("6. Passer à la semaine suivante");
 
             Console.Write("Votre choix : ");
             string? choixStr = Console.ReadLine();
@@ -184,57 +183,18 @@ public class Simulation
                     Jardinier.Arroser();
                     break;
                 case 2:
-                    Jardinier.Magasin.Menu();
+                    Jardinier.Planter();
                     break;
                 case 3:
-                    Jardinier.Vendre();
+                    Jardinier.Magasin.Menu();
                     break;
                 case 4:
-                    // Afficher les parcelles disponibles pour la récolte
-                    Console.WriteLine("Sélectionnez une parcelle à récolter :");
-                    int index = 1;
-                    foreach (var terrain in Jardinier.Terrains)
-                    {
-                        foreach (var parcelle in terrain.Parcelles)
-                        {
-                            if (parcelle.Plante != null && !parcelle.Plante.EstMorte)
-                            {
-                                Console.WriteLine($"{index}. Parcelle {parcelle.NumeroParcelle} avec {parcelle.Plante.Nom}");
-                                index++;
-                            }
-                        }
-                    }
-
-                    // Demander à l'utilisateur de choisir une parcelle
-                    Console.Write("Votre choix : ");
-                    string? choixParcelleStr = Console.ReadLine();
-                    int choixParcelle;
-                    if (!int.TryParse(choixParcelleStr, out choixParcelle) || choixParcelle < 1 || choixParcelle >= index)
-                    {
-                        Console.WriteLine("⛔ Choix invalide.");
-                    }
-                    else
-                    {
-                        // Parcelle choisie par l'utilisateur
-                        int parcelleIndex = 1;
-                        foreach (var terrain in Jardinier.Terrains)
-                        {
-                            foreach (var parcelle in terrain.Parcelles)
-                            {
-                                if (parcelle.Plante != null && !parcelle.Plante.EstMorte)
-                                {
-                                    if (parcelleIndex == choixParcelle)
-                                    {
-                                        Jardinier.Recolter(parcelle); // Passer la parcelle à la méthode Recolter
-                                        break;
-                                    }
-                                    parcelleIndex++;
-                                }
-                            }
-                        }
-                    }
+                    Jardinier.Vendre();
                     break;
                 case 5:
+                    Jardinier.Recolter();
+                    break;
+                case 6:
                     finSemaine = true;
                     break;
                 default:
@@ -248,6 +208,22 @@ public class Simulation
 
     public void SimulerJeu(int nombreSemaines)
     {
+        Random rng = new Random();
+        int tirage = rng.Next(1, 4); // Tire un nombre entre 1 et 3
+        Terrain? terrain = null;
+        switch (tirage)
+        {
+            case 1:
+                terrain=new TerrainDesertique();
+                break;
+            case 2:
+                terrain=new TerrainTropical();
+                break;
+            case 3:
+                terrain=new TerrainVolcanique();
+                break;
+        }
+        Jardinier.Terrains.Add(terrain);
         for (int i = 0; i < nombreSemaines; i++)
         {
             SimulerSemaine();

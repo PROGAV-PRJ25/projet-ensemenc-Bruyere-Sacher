@@ -7,7 +7,6 @@ public class Joueur
     public List<Recoltes> MesRecoltes { get; set; }
     public List<Outils> StockOutils { get; set; }
     public InventaireTypePlante ListePlante { get; set; }
-
     public Magasin Magasin { get; set; } //rajouté par J
 
 
@@ -116,19 +115,11 @@ public class Joueur
             decisionArroser2 = Convert.ToInt32(Console.ReadLine()!);
         }
         Console.WriteLine("Dans quel terrain souhaite tu arroser?");
-        string terrainArrosage = Convert.ToString(Console.ReadLine()!);
+        
         Terrain? terrainChoisi = null;
-        foreach (var terrain in Terrains)
+        do
         {
-            if (terrain.Type == terrainArrosage)
-            {
-                terrainChoisi = terrain;
-            }
-        }
-        while ((terrainChoisi == null)||(!Terrains.Contains(terrainChoisi)))
-        {
-            Console.WriteLine("Ce terrain n'existe pas! Dans quel terrain souhaite tu arroser?");
-            terrainArrosage = Convert.ToString(Console.ReadLine()!);
+            string terrainArrosage = Convert.ToString(Console.ReadLine()!);
             foreach (var terrain in Terrains)
             {
                 if (terrain.Type == terrainArrosage)
@@ -136,7 +127,13 @@ public class Joueur
                     terrainChoisi = terrain;
                 }
             }
-        }
+            if ((terrainChoisi == null) || (!Terrains.Contains(terrainChoisi)))
+            {
+                Console.WriteLine("Ce terrain n'existe pas! Dans quel terrain souhaite tu arroser?");
+            }
+
+        } while ((terrainChoisi == null) || (!Terrains.Contains(terrainChoisi)));
+        
         if (decisionArroser2==1)
         {
             ArroserTerrain(terrainChoisi);
@@ -144,27 +141,22 @@ public class Joueur
         else
         {
             Console.WriteLine("Quel est le numéro de la parcelle que tu souhaite arroser?");
-            int parcelleArrosage = Convert.ToInt32(Console.ReadLine()!);
             Parcelle? parcelleChoisi = null;
-            foreach (var parcelle in terrainChoisi.Parcelles)
+            do
             {
-                if (parcelle.NumeroParcelle == parcelleArrosage)
-                {
-                    parcelleChoisi = parcelle;
-                }
-            }
-            while ((parcelleChoisi == null)||(!terrainChoisi.Parcelles.Contains(parcelleChoisi)))
-            {
-                Console.WriteLine("Cette parcelle n'existe pas! Quel est le numéro de la parcelle que tu souhaite arroser?");
-                parcelleArrosage = Convert.ToInt32(Console.ReadLine()!);
+                int parcelleArrosage = Convert.ToInt32(Console.ReadLine()!);
                 foreach (var parcelle in terrainChoisi.Parcelles)
                 {
                     if (parcelle.NumeroParcelle == parcelleArrosage)
                     {
                         parcelleChoisi = parcelle;
                     }
-                }  
-            }
+                }
+                if ((parcelleChoisi == null) || (!terrainChoisi.Parcelles.Contains(parcelleChoisi)))
+                {
+                    Console.WriteLine("Cette parcelle n'existe pas! Quel est le numéro de la parcelle que tu souhaite arroser?");
+                }
+            } while ((parcelleChoisi == null) || (!terrainChoisi.Parcelles.Contains(parcelleChoisi)));
             ArroserParcelle(parcelleChoisi);
         }
     }
@@ -195,27 +187,62 @@ public class Joueur
         }
         Console.WriteLine($"Le terrain {terrain.Type} a été arrosé.");
     }
-    public void Recolter(Parcelle parcelle)
+    public void Recolter()
     {
-       if (parcelle.Plante != null && !parcelle.Plante.EstMorte && parcelle.Plante.Croissance >= 100)
+        Terrain? terrainChoisi = null;
+        do
         {
-            Console.WriteLine($"{parcelle.Plante.Nom} récoltée depuis la parcelle {parcelle.NumeroParcelle}.");
-            int quantiteRecolte = parcelle.Plante.AvoirQuantiteRecolte();
+            string terrainRecolte = Convert.ToString(Console.ReadLine()!);
+            foreach (var terrain in Terrains)
+            {
+                if (terrain.Type == terrainRecolte)
+                {
+                    terrainChoisi = terrain;
+                }
+            }
+            if ((terrainChoisi == null) || (!Terrains.Contains(terrainChoisi)))
+            {
+                Console.WriteLine("Ce terrain n'existe pas! Dans quel terrain souhaite tu arroser?");
+            }
+        } while ((terrainChoisi == null) || (!Terrains.Contains(terrainChoisi)));
+
+        Console.WriteLine("Quel est le numéro de la parcelle que tu souhaite arroser?");
+        Parcelle? parcelleChoisi = null;
+        do
+        {
+            int parcelleRecolte = Convert.ToInt32(Console.ReadLine()!);
+            foreach (var parcelle in terrainChoisi.Parcelles)
+            {
+                if (parcelle.NumeroParcelle == parcelleRecolte)
+                {
+                    parcelleChoisi = parcelle;
+                }
+            }
+            if ((parcelleChoisi == null) || (!terrainChoisi.Parcelles.Contains(parcelleChoisi)))
+            {
+                Console.WriteLine("Cette parcelle n'existe pas! Quel est le numéro de la parcelle que tu souhaite arroser?");
+            }
+        } while ((parcelleChoisi == null) || (!terrainChoisi.Parcelles.Contains(parcelleChoisi)));
+
+        if (parcelleChoisi.Plante != null && !parcelleChoisi.Plante.EstMorte && parcelleChoisi.Plante.Croissance >= 100)
+        {
+            Console.WriteLine($"{parcelleChoisi.Plante.Nom} récoltée depuis la parcelle {parcelleChoisi.NumeroParcelle}.");
+            int quantiteRecolte = parcelleChoisi.Plante.AvoirQuantiteRecolte();
             bool trouveDansRecolte = false;
 
             foreach (var recolte in MesRecoltes)
             {
-                if (recolte.TypePlante == parcelle.Plante.Nom)
+                if (recolte.TypePlante == parcelleChoisi.Plante.Nom)
                 {
-                    recolte.Quantite += quantiteRecolte;   
+                    recolte.Quantite += quantiteRecolte;
                     trouveDansRecolte = true;
                 }
             }
-            if (trouveDansRecolte==false)
+            if (trouveDansRecolte == false)
             {
-                MesRecoltes.Add(new Recoltes(parcelle.Plante.Nom, quantiteRecolte, parcelle.Plante.Prix));
+                MesRecoltes.Add(new Recoltes(parcelleChoisi.Plante.Nom, quantiteRecolte, parcelleChoisi.Plante.Prix));
             }
-            parcelle.Plante = null;  // Réinitialise la parcelle
+            parcelleChoisi.Plante = null;  // Réinitialise la parcelle
         }
         else
         {
