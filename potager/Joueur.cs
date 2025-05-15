@@ -8,6 +8,8 @@ public class Joueur
     public List<Outils> StockOutils { get; set; }
     public InventaireTypePlante ListePlante { get; set; }
 
+    public Magasin Magasin { get; set; } //rajouté par J
+
 
     public Joueur(string nom, int argent)
     {
@@ -18,6 +20,7 @@ public class Joueur
         StockOutils=new List<Outils>();
         MesRecoltes=new List<Recoltes>();
         ListePlante=new InventaireTypePlante();
+        Magasin = new Magasin(this);  // ajouté par J Le joueur est passé comme argument à la classe Magasin
     }
 
     public void Planter()
