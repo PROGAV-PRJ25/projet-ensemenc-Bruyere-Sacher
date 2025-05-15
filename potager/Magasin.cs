@@ -76,25 +76,25 @@ public class Magasin
 
     public void AcheterTerrain(int prixTerrain)
     {
-        Console.WriteLine("Quel type de terrain voulez-vous acheter ? (Désertique / Tropical / Volcanique)");
-        string choix = Console.ReadLine()!;
-        Terrain? terrain = null;
+        Console.WriteLine("Quel type de terrain veux-tu acheter ?");
+        Console.WriteLine("1. Désertique");
+        Console.WriteLine("2. Tropical");
+        Console.WriteLine("3. Volcanique");
+        Console.Write("Entre le numéro du terrain : ");
 
-        switch (choix.ToLower())
+        if (!int.TryParse(Console.ReadLine(), out int choix) || choix < 1 || choix > 3)
         {
-            case "désertique":
-                terrain = new TerrainDesertique();
-                break;
-            case "tropical":
-                terrain = new TerrainTropical();
-                break;
-            case "volcanique":
-                terrain = new TerrainVolcanique();
-                break;
-            default:
-                Console.WriteLine("❌ Type de terrain invalide.");
-                return;
+            Console.WriteLine("❌ Numéro invalide.");
+            return;
         }
+
+        Terrain terrain = choix switch
+        {
+            1 => new TerrainDesertique(),
+            2 => new TerrainTropical(),
+            3 => new TerrainVolcanique(),
+            _ => null!
+        };
 
         if (joueur.Argent >= prixTerrain)
         {
@@ -150,28 +150,20 @@ public class Magasin
     public void AcheterSemis()
     {
         Console.WriteLine("Quels semis veux-tu acheter ?");
-        foreach (var semis in SemisDisponible)
+        for (int i = 0; i < SemisDisponible.Count; i++)
         {
-            Console.WriteLine($"- {semis.NomPlante} ({semis.PrixAchat} pièces)");
+            var semis = SemisDisponible[i];
+            Console.WriteLine($"{i + 1}. {semis.NomPlante} ({semis.PrixAchat} pièces)");
         }
 
-        string nomSemis = Console.ReadLine()!;
-        Semis semisChoisi = null;
-
-        foreach (var s in SemisDisponible)
+        Console.Write("Entre le numéro du semis : ");
+        if (!int.TryParse(Console.ReadLine(), out int index) || index < 1 || index > SemisDisponible.Count)
         {
-            if (s.NomPlante == nomSemis)
-            {
-                semisChoisi = s;
-                break;
-            }
-        }
-
-        if (semisChoisi == null)
-        {
-            Console.WriteLine("❌ Ce semis n'est pas disponible.");
+            Console.WriteLine("❌ Numéro invalide.");
             return;
         }
+
+        var semisChoisi = SemisDisponible[index - 1];
 
         if (joueur.Argent < semisChoisi.PrixAchat)
         {
@@ -180,49 +172,81 @@ public class Magasin
         }
 
         joueur.Argent -= semisChoisi.PrixAchat;
-        joueur.StockSemis.Add(semisChoisi);
-        Console.WriteLine($"✅ Tu as acheté : {semisChoisi.NomPlante}");
-    }
 
-    public void AcheterOutils()
-    {
-        Console.WriteLine("Quels outils veux-tu acheter ?");
-        foreach (var outil in OutilsDisponible)
+        bool trouve = false;
+        foreach (var semis in joueur.StockSemis)
         {
-            Console.WriteLine($"- {outil.NomOutil} ({outil.PrixAchat} pièces)");
-        }
-
-        string nomOutil = Console.ReadLine()!; 
-        Outils outilChoisi = null;
-
-        foreach (var o in OutilsDisponible)
-        {
-            if (o.NomOutil == nomOutil)
+            if (semis.NomPlante == semisChoisi.NomPlante)
             {
-                outilChoisi = o;
+                semis.Quantite += 1;
+                trouve = true;
                 break;
             }
         }
 
-        if (outilChoisi == null)
+        if (!trouve)
         {
-            Console.WriteLine("❌ Cet outil n'est pas disponible.");
-            return;
+            joueur.StockSemis.Add(new Semis(semisChoisi.NomPlante, semisChoisi.PrixAchat, semisChoisi.EstProductionMultiple, 1));
         }
 
-        if (joueur.Argent < outilChoisi.PrixAchat)
+        Console.WriteLine($"✅ Tu as acheté : {semisChoisi.NomPlante}");
+        Console.WriteLine("📦 Ton stock de semis contient :");
+        foreach (var semis in joueur.StockSemis)
         {
-            Console.WriteLine("❌ Tu n'as pas assez d'argent.");
-            return;
-        }
-
-        joueur.Argent -= outilChoisi.PrixAchat;
-        joueur.StockOutils.Add(outilChoisi);
-        Console.WriteLine($"✅ Tu as acheté : {outilChoisi.NomOutil}");
-        Console.WriteLine("📦 Ton stock d'outils contient :");
-        foreach (var outil in joueur.StockOutils)
-        {
-            Console.WriteLine($"- {outil.NomOutil}");
+            Console.WriteLine($"- {semis.NomPlante} : {semis.Quantite} semis");
         }
     }
+
+
+   public void AcheterOutils()
+{
+    Console.WriteLine("Quels outils veux-tu acheter ?");
+    for (int i = 0; i < OutilsDisponible.Count; i++)
+    {
+        var outil = OutilsDisponible[i];
+        Console.WriteLine($"{i + 1}. {outil.NomOutil} ({outil.PrixAchat} pièces)");
+    }
+
+    Console.Write("Entre le numéro de l'outil : ");
+    if (!int.TryParse(Console.ReadLine(), out int index) || index < 1 || index > OutilsDisponible.Count)
+    {
+        Console.WriteLine("❌ Numéro invalide.");
+        return;
+    }
+
+    var outilChoisi = OutilsDisponible[index - 1];
+
+    if (joueur.Argent < outilChoisi.PrixAchat)
+    {
+        Console.WriteLine("❌ Tu n'as pas assez d'argent.");
+        return;
+    }
+
+    joueur.Argent -= outilChoisi.PrixAchat;
+
+    bool existeDeja = false;
+    foreach (var outil in joueur.StockOutils)
+    {
+        if (outil.NomOutil == outilChoisi.NomOutil)
+        {
+            outil.Quantite += 1;
+            existeDeja = true;
+            break;
+        }
+    }
+
+    if (!existeDeja)
+    {
+        joueur.StockOutils.Add(new Outils(outilChoisi.NomOutil, outilChoisi.PrixAchat, 1));
+    }
+
+    Console.WriteLine($"✅ Tu as acheté : {outilChoisi.NomOutil}");
+    Console.WriteLine("📦 Ton stock d'outils contient :");
+    foreach (var outil in joueur.StockOutils)
+    {
+        Console.WriteLine($"- {outil.NomOutil} x{outil.Quantite}");
+    }
+}
+
+
 }

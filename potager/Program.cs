@@ -31,7 +31,6 @@ foreach (var terrain in joueur.Terrains)
     Console.WriteLine($"- {terrain.Type} avec {terrain.Parcelles.Count} parcelles");
 }
 
-
 // Lancer la simulation pour 5 semaines
 simulation.SimulerJeu(10);
 

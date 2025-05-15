@@ -4,7 +4,7 @@ public class Urgence
     public int Gravite { get; set; } // échelle de 1 à 5
     public bool ProblemeResolu { get; set; }
     private Random random = new Random(); // Instancier Random de manière privée
-    public int ChanceDeSurvenir { get; set; } = 10; // 20% de chance pour qu'une urgence survienne
+    public int ChanceDeSurvenir { get; set; } = 100; // 20% de chance pour qu'une urgence survienne
     public int SemainesNonResolue { get; private set; } = 0; // pour gérer la double temporalité
 
     public Urgence()
