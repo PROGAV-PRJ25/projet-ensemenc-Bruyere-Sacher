@@ -1,7 +1,7 @@
 public class Meteo
 { 
-    public double Precipitation {get; set;}  //en mm
-    public double Ensoleillement {get; set;} //en pourcentage
+    public int Precipitation {get; set;}  //en mm
+    public int Ensoleillement {get; set;} //en pourcentage
     public int Temperature {get; set;}   
     public Meteo() 
     { 
@@ -27,11 +27,59 @@ public class Meteo
         {
             Precipitation = rng.Next(20, 101);
         }
-        Ensoleillement = rng.Next(60, 101); //ensoleillement entre 60 et 100%
+        int soleilChance=rng.Next(0, 100);
+        if (soleilChance < 70)  //70% de chance qu'il beaucoup de soleil
+        {
+            Precipitation = rng.Next(80, 101);
+        }
+        else //30% de chance qu'il y ait un peu moins de soleil
+        {
+            Precipitation = rng.Next(20, 101);
+        }
+        Ensoleillement = rng.Next(60, 80); //ensoleillement entre 60 et 100%
     }
-    public void AppliquerEffet()  //sur les parcelles
+    public void AppliquerEffet(List<Terrain> terrains)  //sur les parcelles
     {
+        foreach (var terrain in terrains)
+        {
+            foreach (var parcelle in terrain.Parcelles)
+            {
+                // Effet de la pluie
+                if (Precipitation>50)
+                {
+                    parcelle.HumiditeParcelle+=20;
+                }
+                else if (Precipitation>20)
+                {
+                    parcelle.HumiditeParcelle+=10;
+                }
+                else if (Precipitation>5)
+                {
+                    parcelle.HumiditeParcelle+=5;
+                }
 
+                // Effet du soleil
+                if (Ensoleillement>90)
+                {
+                    parcelle.HumiditeParcelle-=15;
+                }   
+                else if (Ensoleillement>75)
+                {
+                    parcelle.HumiditeParcelle-=10;
+                }
+                else if (Ensoleillement>60)
+                {
+                    parcelle.HumiditeParcelle-=5;
+                }
+
+                parcelle.EnsoleillementParcelle=Ensoleillement;
+
+                // On limite l’humidité et l'ensoleillement entre 0 et 100
+                parcelle.HumiditeParcelle=Math.Max(0, Math.Min(100, parcelle.HumiditeParcelle));
+            }
+        }
+
+        Console.WriteLine("L'effet de la météo a été appliqué sur l'humidité des parcelles.");
     }
    
 }
