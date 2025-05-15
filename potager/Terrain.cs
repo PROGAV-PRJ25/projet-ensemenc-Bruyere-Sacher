@@ -5,8 +5,6 @@ public abstract class Terrain
     public int Ensoleillement { get; set; }
     public int Temperature { get; set; }
     public List<Parcelle> Parcelles { get; set; }
-
-    // ✅ Ajout : propriété manquante pour corriger CS1061
     public bool EstProtege { get; set; } = false;
 
     public Terrain(string type)
@@ -41,7 +39,6 @@ public abstract class Terrain
             return;
         }
 
-        // ✅ Marque le terrain comme protégé
         EstProtege = true;
 
         foreach (var parcelle in Parcelles)
@@ -55,6 +52,6 @@ public abstract class Terrain
 
     public virtual void MiseAJourCondition()
     {
-        // À surcharger dans les sous-classes
+        
     }
 }
