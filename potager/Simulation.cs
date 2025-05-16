@@ -67,9 +67,10 @@ public class Simulation
             Console.WriteLine("3. Acheter au magasin");
             Console.WriteLine("4. Vendre les récoltes");
             Console.WriteLine("5. Récolter une parcelle");
-            Console.WriteLine("6. Afficher les caractéristiques des plantes");
-            Console.WriteLine("7. Afficher les règles du jeu");
-            Console.WriteLine("8. Passer à la semaine suivante");
+            Console.WriteLine("6  Utiliser un outils");
+            Console.WriteLine("7. Afficher les caractéristiques des plantes");
+            Console.WriteLine("8. Afficher les règles du jeu");
+            Console.WriteLine("9. Passer à la semaine suivante");
 
             Console.Write("Votre choix : ");
             string? choixStr = Console.ReadLine();
@@ -98,12 +99,15 @@ public class Simulation
                     Jardinier.Recolter();
                     break;
                 case 6:
-                    Guide.CaracteristiquesPlantes();
+                    Jardinier.UtiliserOutil();
                     break;
                 case 7:
-                    Guide.ReglesJeu();
+                    Guide.CaracteristiquesPlantes();
                     break;
                 case 8:
+                    Guide.ReglesJeu();
+                    break;
+                case 9:
                     finSemaine = true;
                     break;
                 default:
