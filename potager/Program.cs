@@ -1,38 +1,69 @@
-﻿Console.WriteLine("🌿 Bienvenue dans le simulateur de jardinage !");
+﻿// //Console.WriteLine("🌿 Bienvenue dans le simulateur de jardinage !");
+// Menu();
 
-// Créer le joueur et la météo
-Joueur joueur = new Joueur("Sarah", 500);
-joueur.Magasin = new Magasin(joueur);
-Meteo meteo = new Meteo();
-Simulation simulation = new Simulation(joueur, meteo);
+// // Affichage des infos initiales
+// Console.WriteLine($"\n👩‍🌾 Joueur {joueur.Nom} avec {joueur.Argent} pièces !");
+// Console.WriteLine("🌱 Semis en stock :");
+// foreach (var semis in joueur.StockSemis)
+// {
+//     Console.WriteLine($"- {semis.NomPlante} x{semis.Quantite}");
+// }
 
-// // Ajouter des semis au stock du joueur
-// joueur.StockSemis.Add(new Semis("Tomate", 5, true, 5));
-// joueur.StockSemis.Add(new Semis("Piment", 5, true, 5));
+// Console.WriteLine("🌍 Terrains :");
+// foreach (var terrain in joueur.Terrains)
+// {
+//     Console.WriteLine($"- {terrain.Type} avec {terrain.Parcelles.Count} parcelles");
+// }
 
-// // Créer et ajouter un terrain avec 3 parcelles
-// Terrain terrain1 = new TerrainDesertique();
-// joueur.Terrains.Add(terrain1);
+// // Lancer la simulation pour 5 semaines
+// simulation.SimulerJeu(10);
 
-// Créer une instance de magasin et l'associer au joueur
-  // On passe le joueur dans le constructeur de Magasin
 
-// Affichage des infos initiales
+var menu = new MenuDebut();
+Partie? partie = menu.AfficherMenu();
+
+if (partie == null)
+{
+    Console.WriteLine("❌ Erreur : la partie n'a pas pu être initialisée.");
+    return;
+}
+
+// Vérification de null sur les composants de la partie
+if (partie.Joueur == null)
+{
+    Console.WriteLine("❌ Erreur : aucun joueur n'a été créé.");
+    return;
+}
+
+if (partie.Simulation == null)
+{
+    Console.WriteLine("❌ Erreur : la simulation est introuvable.");
+    return;
+}
+
+Joueur joueur = partie.Joueur;
+Simulation simulation = partie.Simulation;
+
 Console.WriteLine($"\n👩‍🌾 Joueur {joueur.Nom} avec {joueur.Argent} pièces !");
 Console.WriteLine("🌱 Semis en stock :");
-foreach (var semis in joueur.StockSemis)
+
+if (joueur.StockSemis != null)
 {
-    Console.WriteLine($"- {semis.NomPlante} x{semis.Quantite}");
+    foreach (var semis in joueur.StockSemis)
+    {
+        Console.WriteLine($"- {semis.NomPlante} x{semis.Quantite}");
+    }
 }
 
 Console.WriteLine("🌍 Terrains :");
-foreach (var terrain in joueur.Terrains)
+
+if (joueur.Terrains != null)
 {
-    Console.WriteLine($"- {terrain.Type} avec {terrain.Parcelles.Count} parcelles");
+    foreach (var terrain in joueur.Terrains)
+    {
+        string type = terrain.Type ?? "Type inconnu";
+        Console.WriteLine($"- {type} avec {terrain.Parcelles?.Count ?? 0} parcelles");
+    }
 }
 
-// Lancer la simulation pour 5 semaines
-simulation.SimulerJeu(10);
-
-
-
+simulation.SimulerJeu(10); // ou autant de semaines que tu veux
