@@ -7,7 +7,7 @@ public class Joueur
     public List<Recoltes> MesRecoltes { get; set; }
     public List<Outils> StockOutils { get; set; }
     public InventaireTypePlante ListePlante { get; set; }
-    public Magasin Magasin { get; set; } 
+    public Magasin Magasin { get; set; }
 
 
     public Joueur(string nom, int argent)
@@ -16,10 +16,10 @@ public class Joueur
         Argent = argent;
         StockSemis = new List<Semis>();
         Terrains = new List<Terrain>();
-        StockOutils=new List<Outils>();
-        MesRecoltes=new List<Recoltes>();
-        ListePlante=new InventaireTypePlante();
-        Magasin = new Magasin(this);  
+        StockOutils = new List<Outils>();
+        MesRecoltes = new List<Recoltes>();
+        ListePlante = new InventaireTypePlante();
+        Magasin = new Magasin(this);
     }
 
     public void Planter()
@@ -27,7 +27,7 @@ public class Joueur
         Console.WriteLine("Quel type de plante veux-tu planter?");
         AfficherSemis();
         Semis? semisChoisi = null;
-        Plante? planteAPlanter=null;
+        Plante? planteAPlanter = null;
         bool plantePossible = false;
         List<Parcelle> parcellesDisponibles = new List<Parcelle>();
 
@@ -40,9 +40,9 @@ public class Joueur
             // Recherche du semis correspondant
             foreach (var semi in StockSemis)
             {
-                if (semi.NomPlante==choixPlante)
+                if (semi.NomPlante == choixPlante)
                 {
-                    semisChoisi=semi;
+                    semisChoisi = semi;
                 }
             }
             // Si le semis n'est pas trouvé ou la quantité est insuffisante, demande à l'utilisateur de choisir à nouveau
@@ -72,9 +72,9 @@ public class Joueur
                     }
                 }
             }
-        }while(semisChoisi == null || semisChoisi.Quantite == 0 || plantePossible==false);
-        
-        Parcelle? parcelleCible=null;
+        } while (semisChoisi == null || semisChoisi.Quantite == 0 || plantePossible == false);
+
+        Parcelle? parcelleCible = null;
         Console.WriteLine("Dans quel numéro de parcelle veux-tu planter ?");
         Console.WriteLine("Voici les parcelles libres sur lesquelles tu peux plnater ton semi?");
         do
@@ -84,21 +84,21 @@ public class Joueur
                 Console.WriteLine($"- Parcelle n°{parcelle.NumeroParcelle} du terrain {parcelle.TerrainAssocie.Type}");
             }
             int choixParcelle = Convert.ToInt32(Console.ReadLine()!);
-            
+
             // Recherche de la parcelle
             foreach (var parcelle in parcellesDisponibles)
             {
-                if (parcelle.NumeroParcelle==choixParcelle)
+                if (parcelle.NumeroParcelle == choixParcelle)
                 {
-                    parcelleCible=parcelle;
+                    parcelleCible = parcelle;
                 }
             }
             if (parcelleCible == null)
             {
                 Console.WriteLine("Cette parcelle n'existe pas ou n'est pas disponible! Choisis une autre parcelle!");
             }
-            
-        }while(parcelleCible == null);
+
+        } while (parcelleCible == null);
 
         // Planter
         parcelleCible.Plante = planteAPlanter;
@@ -115,7 +115,7 @@ public class Joueur
             decisionArroser2 = Convert.ToInt32(Console.ReadLine()!);
         }
         Console.WriteLine("Dans quel terrain souhaite tu arroser?");
-        
+
         Terrain? terrainChoisi = null;
         do
         {
@@ -133,8 +133,8 @@ public class Joueur
             }
 
         } while ((terrainChoisi == null) || (!Terrains.Contains(terrainChoisi)));
-        
-        if (decisionArroser2==1)
+
+        if (decisionArroser2 == 1)
         {
             ArroserTerrain(terrainChoisi);
         }
@@ -162,27 +162,27 @@ public class Joueur
     }
     public void ArroserParcelle(Parcelle parcelle)
     {
-        if(parcelle.HumiditeParcelle+10<100)
-            {
-                parcelle.HumiditeParcelle+=10;
-            }
-            else
-            {
-                parcelle.HumiditeParcelle=100;
-            }
+        if (parcelle.HumiditeParcelle + 10 < 100)
+        {
+            parcelle.HumiditeParcelle += 10;
+        }
+        else
+        {
+            parcelle.HumiditeParcelle = 100;
+        }
         Console.WriteLine($"La parcelle n°{parcelle.NumeroParcelle} du terrain {parcelle.TerrainAssocie.Type} a été arrosé.");
     }
     public void ArroserTerrain(Terrain terrain)
     {
         foreach (var parcelle in terrain.Parcelles)
         {
-            if(parcelle.HumiditeParcelle+10<100)
+            if (parcelle.HumiditeParcelle + 10 < 100)
             {
-                parcelle.HumiditeParcelle+=10;
+                parcelle.HumiditeParcelle += 10;
             }
             else
             {
-                parcelle.HumiditeParcelle=100;
+                parcelle.HumiditeParcelle = 100;
             }
         }
         Console.WriteLine($"Le terrain {terrain.Type} a été arrosé.");
@@ -260,17 +260,17 @@ public class Joueur
         Console.WriteLine("Quel produit veux-tu vendre ? (entre le numéro correspondant)");
         int choixVente = Convert.ToInt32(Console.ReadLine()!) - 1;
 
-        while(choixVente < 0 || choixVente >= MesRecoltes.Count)
+        while (choixVente < 0 || choixVente >= MesRecoltes.Count)
         {
             Console.WriteLine("Choix invalide. Quel produit veux-tu vendre ? (entre le numéro correspondant).");
             choixVente = Convert.ToInt32(Console.ReadLine()!) - 1;
         }
 
         Recoltes recolteAVendre = MesRecoltes[choixVente];
-        Console.WriteLine($"Tu as {recolteAVendre.TypePlante} et son prix est de {recolteAVendre.Prix}. Combien veux-tu en vendre ?"); 
+        Console.WriteLine($"Tu as {recolteAVendre.TypePlante} et son prix est de {recolteAVendre.Prix}. Combien veux-tu en vendre ?");
         int quantiteAVendre = Convert.ToInt32(Console.ReadLine()!);
 
-        while(quantiteAVendre <= 0 || quantiteAVendre > recolteAVendre.Quantite)
+        while (quantiteAVendre <= 0 || quantiteAVendre > recolteAVendre.Quantite)
         {
             Console.WriteLine($"Choix invalide. Tu as {recolteAVendre.TypePlante} et son prix est de {recolteAVendre.Prix}. Combien veux-tu en vendre ?");
             quantiteAVendre = Convert.ToInt32(Console.ReadLine()!);
@@ -300,4 +300,114 @@ public class Joueur
             }
         }
     }
+
+  public void UtiliserOutil()
+    {
+        if (StockOutils.Count == 0)
+        {
+            Console.WriteLine("❗ Tu n'as aucun outil dans ton stock.");
+            return;
+        }
+
+        Console.WriteLine("🧰 Voici les outils disponibles dans ton stock :");
+        for (int i = 0; i < StockOutils.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {StockOutils[i].NomOutil} x{StockOutils[i].Quantite}");
+        }
+
+        int choixOutil = -1;
+        string saisieOutil = string.Empty;
+
+        do
+        {
+            Console.WriteLine("\nEntre le numéro de l'outil à utiliser, ou '0' pour annuler :");
+            saisieOutil = Console.ReadLine()?.Trim() ?? "";
+
+            if (saisieOutil == "0")
+            {
+                Console.WriteLine("❌ Action annulée.");
+                return;
+            }
+
+            if (!int.TryParse(saisieOutil, out choixOutil) || choixOutil < 1 || choixOutil > StockOutils.Count)
+            {
+                Console.WriteLine("❌ Numéro invalide. Réessaie.");
+                choixOutil = -1;
+            }
+
+        } while (choixOutil == -1);
+
+        Outils outilChoisi = StockOutils[choixOutil - 1];
+
+        if (outilChoisi.Quantite <= 0)
+        {
+            Console.WriteLine($"❌ Tu n'as plus de {outilChoisi.NomOutil}.");
+            return;
+        }
+
+        // Sélection de la parcelle
+        Console.WriteLine("\n🌱 Choisis une parcelle sur laquelle utiliser l'outil :");
+        Dictionary<int, Parcelle> parcellesDisponibles = new Dictionary<int, Parcelle>();
+        int compteur = 1;
+
+        foreach (var terrain in Terrains)
+        {
+            foreach (var parcelle in terrain.Parcelles)
+            {
+                Console.WriteLine($"{compteur}. Terrain {terrain.Type} - Parcelle {parcelle.NumeroParcelle} {(parcelle.EstProtegee ? "[Protégée]" : "")}");
+                parcellesDisponibles[compteur] = parcelle;
+                compteur++;
+            }
+        }
+
+        if (parcellesDisponibles.Count == 0)
+        {
+            Console.WriteLine("❗ Tu n'as aucune parcelle disponible.");
+            return;
+        }
+
+        int choixParcelle = -1;
+        string saisieParcelle = string.Empty;
+
+        do
+        {
+            Console.WriteLine("Entre le numéro de la parcelle, ou '0' pour annuler :");
+            saisieParcelle = Console.ReadLine()?.Trim() ?? "";
+
+            if (saisieParcelle == "0")
+            {
+                Console.WriteLine("❌ Action annulée.");
+                return;
+            }
+
+            if (!int.TryParse(saisieParcelle, out choixParcelle) || !parcellesDisponibles.ContainsKey(choixParcelle))
+            {
+                Console.WriteLine("❌ Numéro invalide. Réessaie.");
+                choixParcelle = -1;
+            }
+
+        } while (choixParcelle == -1);
+
+        Parcelle parcelleCible = parcellesDisponibles[choixParcelle];
+
+        if (parcelleCible.EstProtegee)
+        {
+            Console.WriteLine($"🔒 La parcelle {parcelleCible.NumeroParcelle} est déjà protégée.");
+            return;
+        }
+
+        // Utilisation libre de l’outil
+        parcelleCible.EstProtegee = true;
+        outilChoisi.Quantite--;
+
+        if (outilChoisi.Quantite <= 0)
+        {
+            StockOutils.Remove(outilChoisi);
+        }
+
+        Console.WriteLine($"✅ Tu as utilisé l'{outilChoisi.NomOutil} sur la parcelle {parcelleCible.NumeroParcelle}. Elle est maintenant protégée.");
+    }
+
+
+
 }

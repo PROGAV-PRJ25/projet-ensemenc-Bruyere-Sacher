@@ -47,7 +47,7 @@ public abstract class Terrain
             Console.WriteLine($"Parcelle {parcelle.NumeroParcelle} est maintenant protégée.");
         }
 
-        Console.WriteLine("✅ Toutes les parcelles de ce terrain sont maintenant protégées.");
+        //Console.WriteLine("✅ Toutes les parcelles de ce terrain sont maintenant protégées.");
     }
 
     public virtual void MiseAJourCondition()
