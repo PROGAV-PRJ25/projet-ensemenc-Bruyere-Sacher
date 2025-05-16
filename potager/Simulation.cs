@@ -5,6 +5,7 @@ public class Simulation
     public Joueur Jardinier { get; set; }
     public Meteo Meteo { get; set; }
     public int Semaine { get; set; }
+    public Guide Guide { get; set; }
 
     public Simulation(Joueur jardinier, Meteo meteo)
     {
@@ -66,14 +67,16 @@ public class Simulation
             Console.WriteLine("3. Acheter au magasin");
             Console.WriteLine("4. Vendre les récoltes");
             Console.WriteLine("5. Récolter une parcelle");
-            Console.WriteLine("6. Passer à la semaine suivante");
+            Console.WriteLine("6. Afficher les caractéristiques des plantes");
+            Console.WriteLine("7. Afficher les règles du jeu");
+            Console.WriteLine("8. Passer à la semaine suivante");
 
             Console.Write("Votre choix : ");
             string? choixStr = Console.ReadLine();
             int choixAction;
             if (!int.TryParse(choixStr, out choixAction))
             {
-                Console.WriteLine("⛔ Choix invalide. Veuillez entrer un nombre entre 1 et 5.");
+                Console.WriteLine("⛔ Choix invalide. Veuillez entrer un nombre entre 1 et 8.");
                 continue;
             }
 
@@ -95,6 +98,12 @@ public class Simulation
                     Jardinier.Recolter();
                     break;
                 case 6:
+                    Guide.CaracteristiquesPlantes();
+                    break;
+                case 7:
+                    Guide.ReglesJeu();
+                    break;
+                case 8:
                     finSemaine = true;
                     break;
                 default:
@@ -124,6 +133,9 @@ public class Simulation
                 break;
         }
         Jardinier.Terrains.Add(terrain);
+
+        
+       
         for (int i = 0; i < nombreSemaines; i++)
         {
             SimulerSemaine();

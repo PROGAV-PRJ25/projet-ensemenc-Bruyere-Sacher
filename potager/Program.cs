@@ -66,4 +66,6 @@ if (joueur.Terrains != null)
     }
 }
 
+Guide.ReglesJeu();
+
 simulation.SimulerJeu(10); // ou autant de semaines que tu veux
