@@ -1,5 +1,3 @@
-
-
 public class Simulation
 {
     public Joueur Jardinier { get; set; }
@@ -12,6 +10,7 @@ public class Simulation
         Jardinier = jardinier;
         Meteo = meteo;
         Semaine = 1;
+        Guide = new Guide();
     }
 
     public void SimulerSemaine()
@@ -68,17 +67,19 @@ public class Simulation
             Console.WriteLine("4. Vendre les récoltes");
             Console.WriteLine("5. Récolter une parcelle");
             Console.WriteLine("6  Utiliser un outils");
-            Console.WriteLine("7. Afficher les caractéristiques des plantes");
-            Console.WriteLine("8. Afficher les règles du jeu");
-            Console.WriteLine("9. Passer à la semaine suivante");
+            Console.WriteLine("7. Retirer une plante morte");
+            Console.WriteLine("8. Afficher l'état de nos terrains");
+            Console.WriteLine("9. Afficher les caractéristiques des plantes");
+            Console.WriteLine("10. Afficher les règles du jeu");
+            Console.WriteLine("11. Passer à la semaine suivante");
+            Console.WriteLine("12. Arreter totalement la simulation maintenant");
 
             Console.Write("Votre choix : ");
             string? choixStr = Console.ReadLine();
             int choixAction;
             if (!int.TryParse(choixStr, out choixAction))
             {
-                Console.WriteLine("⛔ Choix invalide. Veuillez entrer un nombre entre 1 et 8.");
-                continue;
+                Console.WriteLine("⛔ Choix invalide. Veuillez entrer un nombre entre 1 et 10.");
             }
 
             switch (choixAction)
@@ -96,22 +97,43 @@ public class Simulation
                     Jardinier.Vendre();
                     break;
                 case 5:
-                    Jardinier.Recolter();
+                    if (Jardinier.MesRecoltes.Count == 0)
+                    {
+                        Console.WriteLine("Vous n'avez aucune récoltes à vendre");
+                    }
+                    else
+                    {
+                        Jardinier.Recolter();
+                    }
                     break;
                 case 6:
                     Jardinier.UtiliserOutil();
                     break;
                 case 7:
-                    Guide.CaracteristiquesPlantes();
+                    Jardinier.Nettoyer();
                     break;
                 case 8:
-                    Guide.ReglesJeu();
+                    Jardinier.AfficherEtatTerrains();
                     break;
                 case 9:
+                    Guide.CaracteristiquesPlantes();
+                    break;
+                case 10:
+                    Guide.ReglesJeu();
+                    break;
+                case 11:
                     finSemaine = true;
                     break;
+                case 12:
+                    Console.WriteLine("❌ Fin de la simulation.");
+                    Console.WriteLine();
+                    Console.WriteLine($"Bravo, vous finissez votre simulation de potager avec {Jardinier.Argent} pièces.");
+                    Console.WriteLine($"Il vous reste aussi:");
+                    Jardinier.AfficherRecolte();
+                    Environment.Exit(0); // Arrête l'exécution du programme
+                    break;
                 default:
-                    Console.WriteLine("⛔ Choix invalide.");
+                    Console.WriteLine("Choix invalide");
                     break;
             }
 
@@ -123,7 +145,7 @@ public class Simulation
     {
         Random rng = new Random();
         int tirage = rng.Next(1, 4); // Tire un nombre entre 1 et 3
-        Terrain? terrain = null;
+        Terrain terrain = null!;
         switch (tirage)
         {
             case 1:
@@ -138,12 +160,12 @@ public class Simulation
         }
         Jardinier.Terrains.Add(terrain);
 
-        
-       
+
         for (int i = 0; i < nombreSemaines; i++)
         {
             SimulerSemaine();
             RealiserAction();
+            Meteo.AppliquerEffet(Jardinier.Terrains);
         }
 
         Console.WriteLine("🎉 Simulation terminée !");

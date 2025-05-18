@@ -55,8 +55,7 @@ public class PlanteProductionMultiple : Plante
             Sante -= 10;
         }
 
-        double tauxConditions = (conditionsRemplies * 100.0) / 3;
-        if (tauxConditions < 50)
+        if (conditionsRemplies==0)
         {
             Sante = 0;
         }
