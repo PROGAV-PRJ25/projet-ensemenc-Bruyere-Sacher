@@ -1,5 +1,6 @@
 public class Guide
 {
+
     public static void CaracteristiquesPlantes()
     {
         Console.WriteLine("\n📗 Liste des plantes et leurs terrains préférés :\n");
@@ -19,7 +20,7 @@ public class Guide
     {
         Console.WriteLine("📘 RÈGLES DU JEU – Simulateur de Potager");
         Console.WriteLine("\n🌱 Dans ce jeu, tu dois t'occuper de ton potager, pour cela tu peux planter, arroser, acheter et vendre tes récoles.");
-        Console.WriteLine("\n Tu ne peux planter des semis que sur leur terrains favoris, sinon elles ne pousseront pas !");
+        Console.WriteLine("\n Tu ne peux planter des semis que sur leur terrains favoris!");
         Console.WriteLine("\n Mais attention ! Si moins de 50% des conditions préférées (ensoleillement, précipitation...) des plantes ne sont pas respectées, la plante meurt");
         Console.WriteLine("\n Il y a 20% de chance qu'une urgence se déclanche. Attention aux intrus et intempéries qui peuvent tué tes plantes si tu ne t'en occupes pas, il faudra alors avoir les outils necessaires pour maintenir tes plantes en vie.");
     }
