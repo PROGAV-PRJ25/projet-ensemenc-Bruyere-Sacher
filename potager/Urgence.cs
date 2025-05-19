@@ -4,7 +4,7 @@ public class Urgence
     public int Gravite { get; set; } // Échelle de 1 à 5
     public bool ProblemeResolu { get; set; }
     private Random random = new Random();
-    public int ChanceDeSurvenir { get; set; } = 10; // 90% de chance d'avoir une urgence
+    public int ChanceDeSurvenir { get; set; } = 100; // 90% de chance d'avoir une urgence
     public int SemainesNonResolue { get; private set; } = 0;
 
     public Urgence()
@@ -12,7 +12,20 @@ public class Urgence
         ProblemeResolu = true;
     }
 
-    public void DeclencherAleatoirement()
+    // public void DeclencherAleatoirement()
+    // {
+    //     int chance = random.Next(1, 101);
+
+    //     if (chance <= ChanceDeSurvenir)
+    //     {
+    //         TypeUrgenceDeclenchee = TypeUrgence();
+    //         Gravite = random.Next(1, 6);
+    //         ProblemeResolu = false;
+    //         AfficherAlerte();
+    //     }
+    // }
+
+    public bool DeclencherAleatoirement()
     {
         int chance = random.Next(1, 101);
 
@@ -22,7 +35,10 @@ public class Urgence
             Gravite = random.Next(1, 6);
             ProblemeResolu = false;
             AfficherAlerte();
+            return true;
         }
+
+        return false;
     }
 
     public void AfficherAlerte()
@@ -37,21 +53,21 @@ public class Urgence
         return typesUrgence[typeUrgence];
     }
 
-    public void EmpirerSiNonResolue()
-    {
-        if (!ProblemeResolu)
-        {
-            SemainesNonResolue++;
-            Gravite = Math.Min(5, Gravite + 1);
-        }
-    }
+    // public void EmpirerSiNonResolue()
+    // {
+    //     if (!ProblemeResolu)
+    //     {
+    //         SemainesNonResolue++;
+    //         Gravite = Math.Min(5, Gravite + 1);
+    //     }
+    // }
 
-    public void ResetUrgence()
-    {
-        ProblemeResolu = true;
-        SemainesNonResolue = 0;
-        TypeUrgenceDeclenchee = string.Empty;
-    }
+    // public void ResetUrgence()
+    // {
+    //     ProblemeResolu = true;
+    //     SemainesNonResolue = 0;
+    //     TypeUrgenceDeclenchee = string.Empty;
+    // }
 
     public void Resoudre(Joueur joueur, Parcelle parcelleTouchee, Magasin magasin)
     {
@@ -90,7 +106,57 @@ public class Urgence
         }
     }
 
-    private void ProtegerTerrain(Joueur joueur, Parcelle parcelleTouchee, Magasin magasin)
+    private void UtiliserOutil(Joueur joueur, Parcelle parcelleTouchee)
+    {
+        if (joueur.StockOutils.Count == 0)
+        {
+            Console.WriteLine("❌ Vous n'avez aucun outil de protection dans votre stock.");
+            return;
+        }
+
+        Console.WriteLine("Quel outil souhaitez-vous utiliser pour protéger le terrain ?");
+        for (int i = 0; i < joueur.StockOutils.Count; i++)
+        {
+            Console.WriteLine($"{i + 1}. {joueur.StockOutils[i].NomOutil} (x{joueur.StockOutils[i].Quantite})");
+        }
+
+        Console.WriteLine("Entrez le numéro de l'outil ou tapez '0' pour annuler.");
+        string choix = Console.ReadLine()?.ToLower() ?? "";
+        int choixOutil = -1;
+
+        if (choix != "0" && int.TryParse(choix, out choixOutil) && choixOutil > 0 && choixOutil <= joueur.StockOutils.Count)
+        {
+            var outilChoisi = joueur.StockOutils[choixOutil - 1];
+
+            string nom = outilChoisi.NomOutil.ToLower();
+            if (nom.Contains("bache") || nom.Contains("bâche") || nom.Contains("cloture") || nom.Contains("clôture") || nom.Contains("épouvantail") || nom.Contains("epouventail"))
+            {
+                ProblemeResolu = true;
+                Console.WriteLine($"✅ La parcelle a été protégée avec succès grâce à l'{outilChoisi.NomOutil}'.");
+
+                outilChoisi.Quantite -= 1;
+                if (outilChoisi.Quantite <= 0)
+                {
+                    joueur.StockOutils.Remove(outilChoisi);
+                }
+            }
+            else
+            {
+                Console.WriteLine("❌ Cet outil ne peut pas être utilisé pour protéger le terrain.");
+            }
+        }
+        else if (choix == "0")
+        {
+            Console.WriteLine("❌ Vous avez annulé l'utilisation d'un outil.");
+        }
+        else
+        {
+            Console.WriteLine("❌ Numéro d'outil invalide.");
+        }
+    }
+
+
+  private void ProtegerTerrain(Joueur joueur, Parcelle parcelleTouchee, Magasin magasin)
     {
         string reponse = string.Empty;
         do
@@ -109,50 +175,11 @@ public class Urgence
         {
             if (joueur.StockOutils.Count > 0)
             {
-                Console.WriteLine("Voici les outils de protection dans votre stock :");
-                for (int i = 0; i < joueur.StockOutils.Count; i++)
-                {
-                    Console.WriteLine($"{i + 1}. {joueur.StockOutils[i].NomOutil}");
-                }
-
-                string choix = string.Empty;
-                int choixOutil = -1;
-
-                do
-                {
-                    Console.WriteLine("Entrez le numéro de l'outil que vous voulez utiliser, ou tapez '0' pour annuler.");
-                    choix = Console.ReadLine()?.ToLower() ?? "";
-
-                    if (choix != "0" && int.TryParse(choix, out choixOutil) && choixOutil > 0 && choixOutil <= joueur.StockOutils.Count)
-                    {
-                        Outils outilChoisi = joueur.StockOutils[choixOutil - 1];
-
-                        if (outilChoisi.NomOutil == "Bâche" || outilChoisi.NomOutil == "Bache" || outilChoisi.NomOutil == "Clôture" || outilChoisi.NomOutil == "Cloture" || outilChoisi.NomOutil == "Epouventail")
-                        {
-                            joueur.Terrains[0].ProtegerTerrain();
-                            ProblemeResolu = true;
-                            Console.WriteLine($"Le terrain a été protégé avec succès grâce à l'{outilChoisi.NomOutil}.");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Cet outil ne peut pas être utilisé pour protéger le terrain.");
-                        }
-                    }
-                    else if (choix != "0")
-                    {
-                        Console.WriteLine("Numéro d'outil invalide.");
-                    }
-
-                } while (choixOutil == -1 && choix != "0");
-
-                if (choix == "0")
-                {
-                    Console.WriteLine("Vous avez annulé l'utilisation de l'outil.");
-                }
+                UtiliserOutil(joueur, parcelleTouchee);
             }
             else
             {
-                Console.WriteLine("Vous n'avez pas d'outil de protection dans votre stock.");
+                Console.WriteLine("❌ Vous n'avez pas d'outil de protection dans votre stock.");
                 Console.WriteLine("Voulez-vous acheter un outil de protection ? (oui/non)");
 
                 string achatReponse = Console.ReadLine()?.ToLower() ?? "";
@@ -161,26 +188,27 @@ public class Urgence
                 {
                     magasin.AcheterOutils();
 
-                    if (joueur.StockOutils.Any(o => o.NomOutil == "Bache" || o.NomOutil == "Bâche" || o.NomOutil == "Clôture" || o.NomOutil == "Cloture" || o.NomOutil == "Epouventail"))
+                    if (joueur.StockOutils.Any(o =>
+                        o.NomOutil.ToLower().Contains("bache") ||
+                        o.NomOutil.ToLower().Contains("bâche") ||
+                        o.NomOutil.ToLower().Contains("cloture") ||
+                        o.NomOutil.ToLower().Contains("clôture") ||
+                        o.NomOutil.ToLower().Contains("épouvantail") ||
+                        o.NomOutil.ToLower().Contains("epouventail")))
                     {
-                        joueur.Terrains[0].ProtegerTerrain();
-                        ProblemeResolu = true;
-                        Console.WriteLine("Le terrain a été protégé avec succès grâce à l'outil de protection acheté.");
+                        UtiliserOutil(joueur, parcelleTouchee);
                     }
                     else
                     {
-                        Console.WriteLine("Vous n'avez pas acheté d'outil de protection.");
+                        Console.WriteLine("❌ Vous n'avez pas acheté d'outil de protection.");
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Vous avez choisi de ne pas acheter d'outil. Le terrain ne sera pas protégé.");
+                    Console.WriteLine("Aucun outil acheté.");
                 }
             }
         }
-        else
-        {
-            Console.WriteLine("Vous avez choisi de ne pas protéger le terrain.");
-        }
     }
+
 }

@@ -1,5 +1,3 @@
-using System.Security;
-
 public class Joueur
 {
     public string Nom { get; set; }
@@ -240,7 +238,7 @@ public class Joueur
                 return;
             }
             terrainChoisi = Terrains[numeroTerrain - 1];
-            
+
         } while (terrainChoisi == null);
 
         Parcelle? parcelleChoisi = null;
@@ -582,6 +580,11 @@ public class Joueur
         }
 
         Console.WriteLine($"✅ Tu as utilisé l'{outilChoisi.NomOutil} sur la parcelle {parcelleCible.NumeroParcelle}. Elle est maintenant protégée.");
+    }
+    
+    public override string ToString()
+    {
+        return Nom;
     }
 
 }

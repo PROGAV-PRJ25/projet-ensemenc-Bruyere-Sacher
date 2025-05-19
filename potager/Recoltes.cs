@@ -1,5 +1,3 @@
-using System.Numerics;
-
 public class Recoltes
 {
     public string TypePlante { get; set; }

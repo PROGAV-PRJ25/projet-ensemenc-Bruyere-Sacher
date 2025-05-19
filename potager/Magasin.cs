@@ -76,25 +76,42 @@ public class Magasin
 
     public void AcheterTerrain(int prixTerrain)
     {
-        Console.WriteLine("Quel type de terrain veux-tu acheter ?");
+        Console.WriteLine("\nQuel type de terrain veux-tu acheter ?");
+        Console.WriteLine("0. Annuler");
         Console.WriteLine("1. Désertique");
         Console.WriteLine("2. Tropical");
         Console.WriteLine("3. Volcanique");
         Console.Write("Entre le numéro du terrain : ");
 
-        if (!int.TryParse(Console.ReadLine(), out int choix) || choix < 1 || choix > 3)
+        if (!int.TryParse(Console.ReadLine(), out int choix))
         {
-            Console.WriteLine("❌ Numéro invalide.");
+            Console.WriteLine("❌ Entrée invalide.");
             return;
         }
 
-        Terrain terrain = choix switch
+        if (choix == 0)
         {
-            1 => new TerrainDesertique(),
-            2 => new TerrainTropical(),
-            3 => new TerrainVolcanique(),
-            _ => null!
-        };
+            Console.WriteLine("✅ Achat annulé.");
+            return;
+        }
+
+        Terrain terrain;
+
+        switch (choix)
+        {
+            case 1:
+                terrain = new TerrainDesertique();
+                break;
+            case 2:
+                terrain = new TerrainTropical();
+                break;
+            case 3:
+                terrain = new TerrainVolcanique();
+                break;
+            default:
+                Console.WriteLine("❌ Numéro invalide.");
+                return;
+        }
 
         if (joueur.Argent >= prixTerrain)
         {
@@ -108,6 +125,7 @@ public class Magasin
         }
     }
 
+
     public void ChoisirEtAcheterParcelle()
     {
         if (joueur.Terrains.Count == 0)
@@ -116,22 +134,37 @@ public class Magasin
             return;
         }
 
-        Console.WriteLine("Sur quel terrain veux-tu ajouter une parcelle ?");
+        Console.WriteLine("\nSur quel terrain veux-tu ajouter une parcelle ?");
+        Console.WriteLine("0. Annuler");
+
         for (int i = 0; i < joueur.Terrains.Count; i++)
         {
             Console.WriteLine($"{i + 1}. Terrain {joueur.Terrains[i].Type}");
         }
 
-        if (int.TryParse(Console.ReadLine(), out int index) && index >= 1 && index <= joueur.Terrains.Count)
+        Console.Write("Entre le numéro du terrain : ");
+        if (!int.TryParse(Console.ReadLine(), out int index))
         {
-            Terrain terrainChoisi = joueur.Terrains[index - 1];
-            AcheterParcelle(terrainChoisi, PrixParcelle);
+            Console.WriteLine("❌ Entrée invalide.");
+            return;
         }
-        else
+
+        if (index == 0)
+        {
+            Console.WriteLine("✅ Action annulée.");
+            return;
+        }
+
+        if (index < 1 || index > joueur.Terrains.Count)
         {
             Console.WriteLine("❌ Choix invalide.");
+            return;
         }
+
+        Terrain terrainChoisi = joueur.Terrains[index - 1];
+        AcheterParcelle(terrainChoisi, PrixParcelle);
     }
+
 
     public void AcheterParcelle(Terrain terrain, int prixParcelle)
     {
@@ -149,7 +182,9 @@ public class Magasin
 
     public void AcheterSemis()
     {
-        Console.WriteLine("Quels semis veux-tu acheter ?");
+        Console.WriteLine("\nQuels semis veux-tu acheter ?");
+        Console.WriteLine("0. Annuler");
+
         for (int i = 0; i < SemisDisponible.Count; i++)
         {
             var semis = SemisDisponible[i];
@@ -157,7 +192,19 @@ public class Magasin
         }
 
         Console.Write("Entre le numéro du semis : ");
-        if (!int.TryParse(Console.ReadLine(), out int index) || index < 1 || index > SemisDisponible.Count)
+        if (!int.TryParse(Console.ReadLine(), out int index))
+        {
+            Console.WriteLine("❌ Entrée invalide.");
+            return;
+        }
+
+        if (index == 0)
+        {
+            Console.WriteLine("✅ Achat annulé.");
+            return;
+        }
+
+        if (index < 1 || index > SemisDisponible.Count)
         {
             Console.WriteLine("❌ Numéro invalide.");
             return;
@@ -186,7 +233,12 @@ public class Magasin
 
         if (!trouve)
         {
-            joueur.StockSemis.Add(new Semis(semisChoisi.NomPlante, semisChoisi.PrixAchat, semisChoisi.EstProductionMultiple, 1));
+            joueur.StockSemis.Add(new Semis(
+                semisChoisi.NomPlante,
+                semisChoisi.PrixAchat,
+                semisChoisi.EstProductionMultiple,
+                1
+            ));
         }
 
         Console.WriteLine($"✅ Tu as acheté : {semisChoisi.NomPlante}");
@@ -198,55 +250,68 @@ public class Magasin
     }
 
 
-   public void AcheterOutils()
-{
-    Console.WriteLine("Quels outils veux-tu acheter ?");
-    for (int i = 0; i < OutilsDisponible.Count; i++)
+
+    public void AcheterOutils()
     {
-        var outil = OutilsDisponible[i];
-        Console.WriteLine($"{i + 1}. {outil.NomOutil} ({outil.PrixAchat} pièces)");
-    }
+        Console.WriteLine("\nQuels outils veux-tu acheter ?");
+        Console.WriteLine("0. Annuler");
 
-    Console.Write("Entre le numéro de l'outil : ");
-    if (!int.TryParse(Console.ReadLine(), out int index) || index < 1 || index > OutilsDisponible.Count)
-    {
-        Console.WriteLine("❌ Numéro invalide.");
-        return;
-    }
-
-    var outilChoisi = OutilsDisponible[index - 1];
-
-    if (joueur.Argent < outilChoisi.PrixAchat)
-    {
-        Console.WriteLine("❌ Tu n'as pas assez d'argent.");
-        return;
-    }
-
-    joueur.Argent -= outilChoisi.PrixAchat;
-
-    bool existeDeja = false;
-    foreach (var outil in joueur.StockOutils)
-    {
-        if (outil.NomOutil == outilChoisi.NomOutil)
+        for (int i = 0; i < OutilsDisponible.Count; i++)
         {
-            outil.Quantite += 1;
-            existeDeja = true;
-            break;
+            var outil = OutilsDisponible[i];
+            Console.WriteLine($"{i + 1}. {outil.NomOutil} ({outil.PrixAchat} pièces)");
+        }
+
+        Console.Write("Entre le numéro de l'outil : ");
+        if (!int.TryParse(Console.ReadLine(), out int index))
+        {
+            Console.WriteLine("❌ Entrée invalide.");
+            return;
+        }
+
+        if (index == 0)
+        {
+            Console.WriteLine("✅ Achat annulé.");
+            return;
+        }
+
+        if (index < 1 || index > OutilsDisponible.Count)
+        {
+            Console.WriteLine("❌ Numéro invalide.");
+            return;
+        }
+
+        var outilChoisi = OutilsDisponible[index - 1];
+
+        if (joueur.Argent < outilChoisi.PrixAchat)
+        {
+            Console.WriteLine("❌ Tu n'as pas assez d'argent.");
+            return;
+        }
+
+        joueur.Argent -= outilChoisi.PrixAchat;
+
+        bool existeDeja = false;
+        foreach (var outil in joueur.StockOutils)
+        {
+            if (outil.NomOutil == outilChoisi.NomOutil)
+            {
+                outil.Quantite += 1;
+                existeDeja = true;
+                break;
+            }
+        }
+
+        if (!existeDeja)
+        {
+            joueur.StockOutils.Add(new Outils(outilChoisi.NomOutil, outilChoisi.PrixAchat, 1));
+        }
+
+        Console.WriteLine($"✅ Tu as acheté : {outilChoisi.NomOutil}");
+        Console.WriteLine("📦 Ton stock d'outils contient :");
+        foreach (var outil in joueur.StockOutils)
+        {
+            Console.WriteLine($"- {outil.NomOutil} x{outil.Quantite}");
         }
     }
-
-    if (!existeDeja)
-    {
-        joueur.StockOutils.Add(new Outils(outilChoisi.NomOutil, outilChoisi.PrixAchat, 1));
-    }
-
-    Console.WriteLine($"✅ Tu as acheté : {outilChoisi.NomOutil}");
-    Console.WriteLine("📦 Ton stock d'outils contient :");
-    foreach (var outil in joueur.StockOutils)
-    {
-        Console.WriteLine($"- {outil.NomOutil} x{outil.Quantite}");
-    }
-}
-
-
 }
