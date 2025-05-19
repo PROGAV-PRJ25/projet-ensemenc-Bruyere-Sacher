@@ -36,17 +36,30 @@ public class Simulation
                 }
 
                 // -------------------------------Pour le mode Urgence----------------------------------
-                // Si l'urgence n'est pas encore associée, on en crée une nouvelle
-                if (parcelle.UrgenceAssociee == null)
+               // Vérifie d'abord que la parcelle contient une plante vivante
+                if (parcelle.Plante != null && !parcelle.Plante.EstMorte)
                 {
-                    parcelle.UrgenceAssociee = new Urgence();
-                    parcelle.UrgenceAssociee.DeclencherAleatoirement();
+                    // Crée une urgence uniquement si la parcelle n’en a pas déjà une
+                    if (parcelle.UrgenceAssociee == null && Semaine != 1)
+                    {
+                        Urgence nouvelleUrgence = new Urgence();
+                        bool urgenceCreee = nouvelleUrgence.DeclencherAleatoirement();
+
+                        if (urgenceCreee)
+                        {
+                            parcelle.UrgenceAssociee = nouvelleUrgence;
+                        }
+                    }
+
+                    // Résout l’urgence si elle est active
+                    if (Semaine != 1 &&
+                        parcelle.UrgenceAssociee != null &&
+                        !parcelle.UrgenceAssociee.ProblemeResolu)
+                    {
+                        parcelle.UrgenceAssociee.Resoudre(Jardinier, parcelle, Jardinier.Magasin);
+                    }
                 }
-                // Gérer l'urgence associée à la parcelle si elle existe
-                if (parcelle.UrgenceAssociee != null && !parcelle.UrgenceAssociee.ProblemeResolu && parcelle.Plante != null && !parcelle.Plante.EstMorte)
-                {
-                    parcelle.UrgenceAssociee.Resoudre(Jardinier, parcelle, Jardinier.Magasin);
-                }
+
             }
         }
 
@@ -166,7 +179,7 @@ public class Simulation
             SimulerSemaine();
             RealiserAction();
             Meteo.AppliquerEffet(Jardinier.Terrains);
-        }
+                    }
 
         Console.WriteLine("🎉 Simulation terminée !");
     }
