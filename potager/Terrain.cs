@@ -10,6 +10,7 @@ public abstract class Terrain
     public Terrain(string type)
     {
         Type = type;
+        Humidite = 30;
         Parcelles = new List<Parcelle>();
         AjouterParcelle();
         AjouterParcelle();

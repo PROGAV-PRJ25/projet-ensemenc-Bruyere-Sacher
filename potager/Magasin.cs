@@ -72,6 +72,7 @@ public class Magasin
                     break;
             }
         } while (choix != 5);
+        Console.WriteLine();
     }
 
     public void AcheterTerrain(int prixTerrain)

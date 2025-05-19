@@ -72,6 +72,7 @@ public class Meteo
                     parcelle.HumiditeParcelle-=5;
                 }
 
+                parcelle.TerrainAssocie.Temperature = Temperature;
                 parcelle.EnsoleillementParcelle=Ensoleillement;
 
                 // On limite l’humidité et l'ensoleillement entre 0 et 100

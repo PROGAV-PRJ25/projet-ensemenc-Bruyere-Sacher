@@ -25,7 +25,6 @@ public class Joueur
 
     public void Planter()
     {
-        AfficherSemis(); //affiche le stock de semis
         if (StockSemis.Count == 0)
         {
             return;
@@ -42,7 +41,7 @@ public class Joueur
         {
             parcellesDisponibles.Clear();
             plantePossible = false;
-            AfficherSemis();
+            AfficherSemis();  //affiche le stock de semis
             Console.WriteLine("Quel type de plante veux-tu planter? (entre le chiffre correspondant) (ou tapes 0 si tu ne veux plus réaliser cette action)");
             string? numeroSemi = Console.ReadLine();
             if (!int.TryParse(numeroSemi, out int index) || index < 0 || index > StockSemis.Count) //condition si la saisie n'est pas un entier qui correspond à un semis
@@ -78,6 +77,10 @@ public class Joueur
                             }
                         }
                     }
+                }
+                if (plantePossible == false)
+                {
+                    Console.WriteLine($"Tu n'a pas de parcelle libre sur un terrain {planteAPlanter.TerrainPrefere}. Tu ne peux pas planter ce semis sur un autre terrain! Choisis un autre semis ou va au magasin acheter une parcelle de type {planteAPlanter.TerrainPrefere} ");
                 }
             }
         } while (semisChoisi == null || semisChoisi.Quantite == 0 || plantePossible == false);
