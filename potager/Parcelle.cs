@@ -8,14 +8,15 @@ public class Parcelle
     public int EnsoleillementParcelle {get; set;}
     public bool EstProtegee {get; set;}
     public Urgence? UrgenceAssociee { get; set; }
+    public int DureeProtectionRestante { get; set; } = 0; //durée de la protection
     public Parcelle(int numero, Terrain terrain)
     {
         NumeroParcelle = numero;
-        Vide=true;
-        TerrainAssocie=terrain;
-        HumiditeParcelle=terrain.Humidite;
-        EnsoleillementParcelle=terrain.Ensoleillement;
-        EstProtegee=false;
+        Vide = true;
+        TerrainAssocie = terrain;
+        HumiditeParcelle = terrain.Humidite;
+        EnsoleillementParcelle = terrain.Ensoleillement;
+        EstProtegee = false;
     }
     public override string ToString()
     {

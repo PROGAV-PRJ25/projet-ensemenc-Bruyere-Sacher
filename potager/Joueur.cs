@@ -572,6 +572,7 @@ public class Joueur
 
         // Utilisation libre de l’outil
         parcelleCible.EstProtegee = true;
+        parcelleCible.DureeProtectionRestante = 2; // Protégée pour 2 semaines par exemple
         outilChoisi.Quantite--;
 
         if (outilChoisi.Quantite <= 0)
@@ -581,6 +582,7 @@ public class Joueur
 
         Console.WriteLine($"✅ Tu as utilisé l'{outilChoisi.NomOutil} sur la parcelle {parcelleCible.NumeroParcelle}. Elle est maintenant protégée.");
     }
+    
     
     public override string ToString()
     {

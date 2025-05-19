@@ -16,6 +16,23 @@ public class Simulation
     public void SimulerSemaine()
     {
         Console.WriteLine($"\n Semaine {Semaine} - Jardin de {Jardinier} - Argent: {Jardinier.Argent} pièces");
+
+       foreach (var terrain in Jardinier.Terrains) // reduit le remps de la protection 
+        {
+            foreach (var parcelle in terrain.Parcelles)
+            {
+                if (parcelle.EstProtegee)
+                {
+                    parcelle.DureeProtectionRestante--;
+                    Console.WriteLine($"Le temps de vie de la protection de la parcelle {parcelle.NumeroParcelle} a diminuée.");
+                    if (parcelle.DureeProtectionRestante <= 0)
+                    {
+                        parcelle.EstProtegee = false;
+                        Console.WriteLine($"🔓 La protection de la parcelle {parcelle.NumeroParcelle} a expiré.");
+                    }
+                }
+            }
+        }
         
         Meteo.DefinirMeteoAleatoirement(); // météo aléatoire pour la semaine
         Console.WriteLine(Meteo.ToString());
@@ -37,9 +54,8 @@ public class Simulation
 
                 // -------------------------------Pour le mode Urgence----------------------------------
                // Vérifie d'abord que la parcelle contient une plante vivante
-                if (parcelle.Plante != null && !parcelle.Plante.EstMorte)
+               if (parcelle.Plante != null && !parcelle.Plante.EstMorte && !parcelle.EstProtegee)
                 {
-                    // Crée une urgence uniquement si la parcelle n’en a pas déjà une
                     if (parcelle.UrgenceAssociee == null && Semaine != 1)
                     {
                         Urgence nouvelleUrgence = new Urgence();
@@ -51,7 +67,6 @@ public class Simulation
                         }
                     }
 
-                    // Résout l’urgence si elle est active
                     if (Semaine != 1 &&
                         parcelle.UrgenceAssociee != null &&
                         !parcelle.UrgenceAssociee.ProblemeResolu)
@@ -59,6 +74,7 @@ public class Simulation
                         parcelle.UrgenceAssociee.Resoudre(Jardinier, parcelle, Jardinier.Magasin);
                     }
                 }
+
 
             }
         }
