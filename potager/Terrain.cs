@@ -22,33 +22,7 @@ public abstract class Terrain
         Parcelles.Add(new Parcelle(numero, this));
     }
 
-    // public void ProtegerTerrain()
-    // {
-    //     Console.WriteLine("Quel type de protection souhaitez-vous appliquer ?");
-    //     Console.WriteLine("1. Protection contre les Parasites (Pacaris)");
-    //     Console.WriteLine("2. Protection contre les Oiseaux");
-    //     Console.WriteLine("3. Protection contre la Grêle");
 
-    //     string choixProtection = Console.ReadLine()!;
-
-    //     bool protectionValide = choixProtection == "1" || choixProtection == "2" || choixProtection == "3";
-
-    //     if (!protectionValide)
-    //     {
-    //         Console.WriteLine("Choix invalide.");
-    //         return;
-    //     }
-
-    //     EstProtege = true;
-
-    //     foreach (var parcelle in Parcelles)
-    //     {
-    //         parcelle.EstProtegee = true;
-    //         Console.WriteLine($"Parcelle {parcelle.NumeroParcelle} est maintenant protégée.");
-    //     }
-
-    //     //Console.WriteLine("✅ Toutes les parcelles de ce terrain sont maintenant protégées.");
-    // }
 
     public virtual void MiseAJourCondition()
     {

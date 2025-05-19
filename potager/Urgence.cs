@@ -4,26 +4,13 @@ public class Urgence
     public int Gravite { get; set; } // Échelle de 1 à 5
     public bool ProblemeResolu { get; set; }
     private Random random = new Random();
-    public int ChanceDeSurvenir { get; set; } = 100; // 90% de chance d'avoir une urgence
+    public int ChanceDeSurvenir { get; set; } = 100; // 40% de chance d'avoir une urgence
     public int SemainesNonResolue { get; private set; } = 0;
 
     public Urgence()
     {
         ProblemeResolu = true;
     }
-
-    // public void DeclencherAleatoirement()
-    // {
-    //     int chance = random.Next(1, 101);
-
-    //     if (chance <= ChanceDeSurvenir)
-    //     {
-    //         TypeUrgenceDeclenchee = TypeUrgence();
-    //         Gravite = random.Next(1, 6);
-    //         ProblemeResolu = false;
-    //         AfficherAlerte();
-    //     }
-    // }
 
     public bool DeclencherAleatoirement()
     {
@@ -69,6 +56,42 @@ public class Urgence
     //     TypeUrgenceDeclenchee = string.Empty;
     // }
 
+    // public void Resoudre(Joueur joueur, Parcelle parcelleTouchee, Magasin magasin)
+    // {
+    //     if (!ProblemeResolu)
+    //     {
+    //         Console.WriteLine($"{TypeUrgenceDeclenchee} est survenue sur la parcelle {parcelleTouchee.NumeroParcelle}.");
+
+    //         if (parcelleTouchee.Plante != null)
+    //         {
+    //             int perteDeSante = Gravite * 5;
+    //             parcelleTouchee.Plante.Sante -= perteDeSante;
+
+    //             if (parcelleTouchee.Plante.Sante <= 0)
+    //             {
+    //                 parcelleTouchee.Plante.EstMorte = true;
+    //                 Console.WriteLine($"❌ La plante de la parcelle {parcelleTouchee.NumeroParcelle} est morte.");
+    //             }
+    //         }
+    //         else
+    //         {
+    //             Console.WriteLine($"⚠️ La parcelle {parcelleTouchee.NumeroParcelle} ne contient pas de plante.");
+    //         }
+
+    //         ProtegerTerrain(joueur, parcelleTouchee, magasin);
+    //     }
+    //     else
+    //     {
+    //         if (parcelleTouchee.Plante != null)
+    //         {
+    //             Console.WriteLine($"✅ L'urgence a déjà été résolue sur la parcelle {parcelleTouchee.NumeroParcelle}. Santé actuelle : {parcelleTouchee.Plante.Sante}%");
+    //         }
+    //         else
+    //         {
+    //             Console.WriteLine($"✅ L'urgence a été résolue sur la parcelle {parcelleTouchee.NumeroParcelle}, mais elle est vide.");
+    //         }
+    //     }
+    // }
     public void Resoudre(Joueur joueur, Parcelle parcelleTouchee, Magasin magasin)
     {
         if (!ProblemeResolu)
@@ -92,6 +115,15 @@ public class Urgence
             }
 
             ProtegerTerrain(joueur, parcelleTouchee, magasin);
+
+            // ✅ Protection dure 2 semaines si appliquée
+            if (parcelleTouchee.EstProtegee)
+            {
+                parcelleTouchee.DureeProtectionRestante = 2;
+            }
+
+
+            ProblemeResolu = true;
         }
         else
         {
@@ -105,6 +137,7 @@ public class Urgence
             }
         }
     }
+
 
     private void UtiliserOutil(Joueur joueur, Parcelle parcelleTouchee)
     {
@@ -129,9 +162,10 @@ public class Urgence
             var outilChoisi = joueur.StockOutils[choixOutil - 1];
 
             string nom = outilChoisi.NomOutil.ToLower();
-            if (nom.Contains("bache") || nom.Contains("bâche")|| nom.Contains("serre")  || nom.Contains("cloture") || nom.Contains("clôture") || nom.Contains("épouvantail") || nom.Contains("epouventail"))
+            if (nom.Contains("bache") || nom.Contains("bâche") || nom.Contains("serre") || nom.Contains("cloture") || nom.Contains("clôture") || nom.Contains("épouvantail") || nom.Contains("epouventail"))
             {
                 ProblemeResolu = true;
+                parcelleTouchee.EstProtegee = true;
                 Console.WriteLine($"✅ La parcelle a été protégée avec succès grâce à l'{outilChoisi.NomOutil}'.");
 
                 outilChoisi.Quantite -= 1;
