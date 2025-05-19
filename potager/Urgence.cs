@@ -129,7 +129,7 @@ public class Urgence
             var outilChoisi = joueur.StockOutils[choixOutil - 1];
 
             string nom = outilChoisi.NomOutil.ToLower();
-            if (nom.Contains("bache") || nom.Contains("bâche") || nom.Contains("cloture") || nom.Contains("clôture") || nom.Contains("épouvantail") || nom.Contains("epouventail"))
+            if (nom.Contains("bache") || nom.Contains("bâche")|| nom.Contains("serre")  || nom.Contains("cloture") || nom.Contains("clôture") || nom.Contains("épouvantail") || nom.Contains("epouventail"))
             {
                 ProblemeResolu = true;
                 Console.WriteLine($"✅ La parcelle a été protégée avec succès grâce à l'{outilChoisi.NomOutil}'.");
@@ -191,6 +191,7 @@ public class Urgence
                     if (joueur.StockOutils.Any(o =>
                         o.NomOutil.ToLower().Contains("bache") ||
                         o.NomOutil.ToLower().Contains("bâche") ||
+                        o.NomOutil.ToLower().Contains("serre") ||
                         o.NomOutil.ToLower().Contains("cloture") ||
                         o.NomOutil.ToLower().Contains("clôture") ||
                         o.NomOutil.ToLower().Contains("épouvantail") ||
