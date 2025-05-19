@@ -110,60 +110,66 @@ public class Simulation
             {
                 Console.WriteLine("⛔ Choix invalide. Veuillez entrer un nombre entre 1 et 10.");
             }
-
-            switch (choixAction)
+            else
             {
-                case 1:
-                    Jardinier.Arroser();
-                    break;
-                case 2:
-                    Jardinier.Planter();
-                    break;
-                case 3:
-                    Jardinier.Magasin.Menu();
-                    break;
-                case 4:
-                    Jardinier.Vendre();
-                    break;
-                case 5:
-                    if (Jardinier.MesRecoltes.Count == 0)
-                    {
-                        Console.WriteLine("Vous n'avez aucune récoltes à vendre");
-                    }
-                    else
-                    {
-                        Jardinier.Recolter();
-                    }
-                    break;
-                case 6:
-                    Jardinier.UtiliserOutil();
-                    break;
-                case 7:
-                    Jardinier.Nettoyer();
-                    break;
-                case 8:
-                    Jardinier.AfficherEtatTerrains();
-                    break;
-                case 9:
-                    Guide.CaracteristiquesPlantes();
-                    break;
-                case 10:
-                    Guide.ReglesJeu();
-                    break;
-                case 11:
-                    finSemaine = true;
-                    break;
-                case 12:
-                    Console.WriteLine("❌ Fin de la simulation.");
-                    Console.WriteLine();
-                    Console.WriteLine($"Bravo, vous finissez votre simulation de potager avec {Jardinier.Argent} pièces.");
-                    Console.WriteLine($"Il vous reste aussi:");
-                    Jardinier.AfficherRecolte();
-                    Environment.Exit(0); // Arrête l'exécution du programme
-                    break;
-                default:
-                    Console.WriteLine("Choix invalide");
-                    break;
+                switch (choixAction)
+                {
+                    case 1:
+                        Jardinier.Arroser();
+                        break;
+                    case 2:
+                        Jardinier.Planter();
+                        break;
+                    case 3:
+                        Jardinier.Magasin.Menu();
+                        break;
+                    case 4:
+                        Jardinier.Vendre();
+                        break;
+                    case 5:
+                        if (Jardinier.MesRecoltes.Count == 0)
+                        {
+                            Console.WriteLine("Vous n'avez aucune récoltes à vendre");
+                        }
+                        else
+                        {
+                            Jardinier.Recolter();
+                        }
+                        break;
+                    case 6:
+                        Jardinier.UtiliserOutil();
+                        break;
+                    case 7:
+                        Jardinier.Nettoyer();
+                        break;
+                    case 8:
+                        Jardinier.AfficherEtatTerrains();
+                        break;
+                    case 9:
+                        Guide.CaracteristiquesPlantes();
+                        break;
+                    case 10:
+                        Guide.ReglesJeu();
+                        break;
+                    case 11:
+                        finSemaine = true;
+                        break;
+                    case 12:
+                        Console.WriteLine("❌ Fin de la simulation.");
+                        Console.WriteLine();
+                        Console.WriteLine($"Bravo, vous finissez votre simulation de potager avec {Jardinier.Argent} pièces.");
+                        if (Jardinier.MesRecoltes.Count != 0)
+                        {
+                            Console.WriteLine($"Vous avez dans vos récoltes:");
+                            Jardinier.AfficherRecolte();
+                        }
+
+                        Environment.Exit(0); //arrête l'exécution du programme
+                        break;
+                    default:
+                        Console.WriteLine("Choix invalide");
+                        break;
+                }
             }
 
         } while (!finSemaine);
@@ -173,7 +179,7 @@ public class Simulation
     public void SimulerJeu(int nombreSemaines)
     {
         Random rng = new Random();
-        int tirage = rng.Next(1, 4); // Tire un nombre entre 1 et 3
+        int tirage = rng.Next(1, 4); //tire un nombre entre 1 et 3
         Terrain terrain = null!;
         switch (tirage)
         {
@@ -188,7 +194,8 @@ public class Simulation
                 break;
         }
         Jardinier.Terrains.Add(terrain);
-
+        Meteo.DefinirMeteoAleatoirement(); //météo initale
+        Meteo.AppliquerEffet(Jardinier.Terrains); // appliquer météo pour les terrains initiaux
 
         for (int i = 0; i < nombreSemaines; i++)
         {
