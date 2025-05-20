@@ -24,16 +24,4 @@ public class Parcelle
         return message;
     }
 
-    public void AjouterPlante(Plante plante)
-    {
-        if (Vide==true)
-        {
-            Plante = plante;
-            plante.IdParcelle = this;
-            Console.WriteLine($"la {plante} a bien été ajouté à la parcelle numéro {NumeroParcelle}");
-        }
-        else
-            Console.WriteLine($"Parcelle {NumeroParcelle} est déjà occupée !");
-    }
-
 }

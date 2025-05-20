@@ -4,13 +4,13 @@ public class Magasin
     public List<Outils> OutilsDisponible { get; set; }
     public int PrixTerrain { get; set; }
     public int PrixParcelle { get; set; }
-    private Joueur joueur;
+    private Joueur Joueur;
 
     public Magasin(Joueur joueur, int prixTerrain = 100, int prixParcelle = 25)
     {
         PrixTerrain = prixTerrain;
         PrixParcelle = prixParcelle;
-        this.joueur = joueur;
+        Joueur = joueur;
 
         SemisDisponible = new List<Semis>
         {
@@ -114,10 +114,10 @@ public class Magasin
                 return;
         }
 
-        if (joueur.Argent >= prixTerrain)
+        if (Joueur.Argent >= prixTerrain)
         {
-            joueur.Argent -= prixTerrain;
-            joueur.Terrains.Add(terrain);
+            Joueur.Argent -= prixTerrain;
+            Joueur.Terrains.Add(terrain);
             Console.WriteLine($"✅ Terrain {terrain.Type} acheté !");
         }
         else
@@ -129,7 +129,7 @@ public class Magasin
 
     public void ChoisirEtAcheterParcelle()
     {
-        if (joueur.Terrains.Count == 0)
+        if (Joueur.Terrains.Count == 0)
         {
             Console.WriteLine("❗ Tu n'as pas encore de terrain. Achète-en un d'abord.");
             return;
@@ -138,9 +138,9 @@ public class Magasin
         Console.WriteLine("\nSur quel terrain veux-tu ajouter une parcelle ?");
         Console.WriteLine("0. Annuler");
 
-        for (int i = 0; i < joueur.Terrains.Count; i++)
+        for (int i = 0; i < Joueur.Terrains.Count; i++)
         {
-            Console.WriteLine($"{i + 1}. Terrain {joueur.Terrains[i].Type}");
+            Console.WriteLine($"{i + 1}. Terrain {Joueur.Terrains[i].Type}");
         }
 
         Console.Write("Entre le numéro du terrain : ");
@@ -156,22 +156,22 @@ public class Magasin
             return;
         }
 
-        if (index < 1 || index > joueur.Terrains.Count)
+        if (index < 1 || index > Joueur.Terrains.Count)
         {
             Console.WriteLine("❌ Choix invalide.");
             return;
         }
 
-        Terrain terrainChoisi = joueur.Terrains[index - 1];
+        Terrain terrainChoisi = Joueur.Terrains[index - 1];
         AcheterParcelle(terrainChoisi, PrixParcelle);
     }
 
 
     public void AcheterParcelle(Terrain terrain, int prixParcelle)
     {
-        if (joueur.Argent >= prixParcelle)
+        if (Joueur.Argent >= prixParcelle)
         {
-            joueur.Argent -= prixParcelle;
+            Joueur.Argent -= prixParcelle;
             terrain.AjouterParcelle();
             Console.WriteLine("✅ Parcelle ajoutée !");
         }
@@ -213,16 +213,16 @@ public class Magasin
 
         var semisChoisi = SemisDisponible[index - 1];
 
-        if (joueur.Argent < semisChoisi.PrixAchat)
+        if (Joueur.Argent < semisChoisi.PrixAchat)
         {
             Console.WriteLine("❌ Tu n'as pas assez d'argent.");
             return;
         }
 
-        joueur.Argent -= semisChoisi.PrixAchat;
+        Joueur.Argent -= semisChoisi.PrixAchat;
 
         bool trouve = false;
-        foreach (var semis in joueur.StockSemis)
+        foreach (var semis in Joueur.StockSemis)
         {
             if (semis.NomPlante == semisChoisi.NomPlante)
             {
@@ -234,7 +234,7 @@ public class Magasin
 
         if (!trouve)
         {
-            joueur.StockSemis.Add(new Semis(
+            Joueur.StockSemis.Add(new Semis(
                 semisChoisi.NomPlante,
                 semisChoisi.PrixAchat,
                 semisChoisi.EstProductionMultiple,
@@ -244,7 +244,7 @@ public class Magasin
 
         Console.WriteLine($"✅ Tu as acheté : {semisChoisi.NomPlante}");
         Console.WriteLine("📦 Ton stock de semis contient :");
-        foreach (var semis in joueur.StockSemis)
+        foreach (var semis in Joueur.StockSemis)
         {
             Console.WriteLine($"- {semis.NomPlante} : {semis.Quantite} semis");
         }
@@ -284,16 +284,16 @@ public class Magasin
 
         var outilChoisi = OutilsDisponible[index - 1];
 
-        if (joueur.Argent < outilChoisi.PrixAchat)
+        if (Joueur.Argent < outilChoisi.PrixAchat)
         {
             Console.WriteLine("❌ Tu n'as pas assez d'argent.");
             return;
         }
 
-        joueur.Argent -= outilChoisi.PrixAchat;
+        Joueur.Argent -= outilChoisi.PrixAchat;
 
         bool existeDeja = false;
-        foreach (var outil in joueur.StockOutils)
+        foreach (var outil in Joueur.StockOutils)
         {
             if (outil.NomOutil == outilChoisi.NomOutil)
             {
@@ -305,12 +305,12 @@ public class Magasin
 
         if (!existeDeja)
         {
-            joueur.StockOutils.Add(new Outils(outilChoisi.NomOutil, outilChoisi.PrixAchat, 1));
+            Joueur.StockOutils.Add(new Outils(outilChoisi.NomOutil, outilChoisi.PrixAchat, 1));
         }
 
         Console.WriteLine($"✅ Tu as acheté : {outilChoisi.NomOutil}");
         Console.WriteLine("📦 Ton stock d'outils contient :");
-        foreach (var outil in joueur.StockOutils)
+        foreach (var outil in Joueur.StockOutils)
         {
             Console.WriteLine($"- {outil.NomOutil} x{outil.Quantite}");
         }

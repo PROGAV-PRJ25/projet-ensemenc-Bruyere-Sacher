@@ -23,9 +23,7 @@ public abstract class Terrain
         Parcelles.Add(new Parcelle(numero, this));
     }
 
-
-
-    public virtual void MiseAJourCondition()
+    public virtual void MiseAJourCondition(Parcelle parcelle)
     {
         
     }

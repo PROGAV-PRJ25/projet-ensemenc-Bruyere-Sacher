@@ -4,27 +4,24 @@ public class TerrainDesertique : Terrain
     {
     }
 
-    public override void MiseAJourCondition()
+    public override void MiseAJourCondition(Parcelle parcelle)
     {
         // L'humidité baisse dans un environnement désertique (réduction de moitié)
-        Humidite = (int)(Humidite * 0.5); // Réduction de moitié de l'humidité, les déserts étant secs.
+        parcelle.HumiditeParcelle = (int)(parcelle.HumiditeParcelle * 0.5); // Réduction de moitié de l'humidité, les déserts étant secs.
         
         // Limiter l'humidité à 100% maximum après réduction
-        if (Humidite > 100) 
+        if (parcelle.HumiditeParcelle > 100) 
         {
-            Humidite = 100;
+            parcelle.HumiditeParcelle = 100;
         }
 
-        // Température: les températures des déserts peuvent être très chaudes pendant la journée et froides la nuit.
-        Temperature += 5; // On augmente la température de 5°C pour simuler la chaleur du désert
-
         // Ensoleillement: généralement très élevé dans les déserts
-        Ensoleillement = (int)(Ensoleillement * 1.2); // Augmenter l'ensoleillement de 20%
+        parcelle.EnsoleillementParcelle = (int)(parcelle.EnsoleillementParcelle * 1.2); // Augmenter l'ensoleillement de 20%
         
         // Limiter l'ensoleillement à 100% maximum
-        if (Ensoleillement > 100)
+        if (parcelle.EnsoleillementParcelle > 100)
         {
-            Ensoleillement = 100;
+            parcelle.EnsoleillementParcelle = 100;
         }
     }
 }

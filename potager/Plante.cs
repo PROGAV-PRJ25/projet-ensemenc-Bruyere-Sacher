@@ -7,7 +7,6 @@ public abstract class Plante
     public int TemperaturePrefere {get; set;}
     public int BesoinEau {get; set;}   // en pourcentage
     public int BesoinLumiere {get; set;}   // en pourcentage
-    // public int Prix {get; set;} on verra ou on le met
     public int TempsDeMaturation {get; set;}  //temps en semaine pour qu'on puisse recolter la plante
     public int Sante {get; set;}
     public int Age {get; set;}  //en semaine
