@@ -25,6 +25,7 @@ public class Joueur
     {
         if (StockSemis.Count == 0)
         {
+            Console.WriteLine("Vous n'avez pas de semis. Allez en achter au magasin!");
             return;
         }
 
@@ -585,8 +586,7 @@ public class Joueur
 
         Console.WriteLine($"✅ Tu as utilisé l'{outilChoisi.NomOutil} sur la parcelle {parcelleCible.NumeroParcelle}. Elle est maintenant protégée.");
     }
-    
-    
+
     public override string ToString()
     {
         return Nom;

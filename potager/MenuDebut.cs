@@ -30,7 +30,7 @@ public class MenuDebut
     return null; //ne sera jamais atteint, mais nécessaire pour compiler
     
   }
-  Partie DemarrerPartie()  //Partie = le type de l’objet que la méthode renvoie
+  public Partie DemarrerPartie()  //Partie = le type de l’objet que la méthode renvoie
   {
     string nom = "";
 
@@ -53,7 +53,7 @@ public class MenuDebut
   }
 
 
-  void AffichageBanniereDebut()
+  public void AffichageBanniereDebut()
   {
     Console.BackgroundColor = ConsoleColor.Black;
     Console.ForegroundColor = ConsoleColor.DarkYellow;

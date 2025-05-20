@@ -17,7 +17,7 @@ public class Simulation
     {
         Console.WriteLine($"\n Semaine {Semaine} - Jardin de {Jardinier} - Argent: {Jardinier.Argent} pièces");
 
-       foreach (var terrain in Jardinier.Terrains) // reduit le remps de la protection 
+        foreach (var terrain in Jardinier.Terrains) // reduit le remps de la protection 
         {
             foreach (var parcelle in terrain.Parcelles)
             {
@@ -28,7 +28,7 @@ public class Simulation
                     if (parcelle.DureeProtectionRestante <= 0)
                     {
                         parcelle.EstProtegee = false;
-                        Console.WriteLine($"🔓 La protection de la parcelle {parcelle.NumeroParcelle} a expiré.");
+                        Console.WriteLine($"La protection de la parcelle {parcelle.NumeroParcelle} a expiré.");
                     }
                 }
             }
@@ -39,9 +39,10 @@ public class Simulation
 
         foreach (var terrain in Jardinier.Terrains)
         {
-            terrain.MiseAJourCondition(); // mise à jour de l'humidité/ensoleillement
+            
             foreach (var parcelle in terrain.Parcelles)
             {
+                terrain.MiseAJourCondition(parcelle); // mise à jour de l'humidité/ensoleillement sur chaque parcelle selon le type de terrain
                 if (parcelle.Plante != null)
                 {
                     parcelle.Plante.AnalyserSante(Meteo.Temperature, parcelle.HumiditeParcelle, parcelle.EnsoleillementParcelle);
@@ -53,8 +54,8 @@ public class Simulation
                 }
 
                 // -------------------------------Pour le mode Urgence----------------------------------
-               // Vérifie d'abord que la parcelle contient une plante vivante
-               if (parcelle.Plante != null && !parcelle.Plante.EstMorte && !parcelle.EstProtegee)
+                // Vérifie d'abord que la parcelle contient une plante vivante
+                if (parcelle.Plante != null && !parcelle.Plante.EstMorte && !parcelle.EstProtegee)
                 {
                     if (parcelle.UrgenceAssociee == null && Semaine != 1)
                     {
@@ -81,12 +82,9 @@ public class Simulation
 
         Semaine++;
     }
-
-
-   public void RealiserAction()
+    public void RealiserAction()
     {
         bool finSemaine = false;
-
         do
         {
             Console.WriteLine("\n📋 Que voulez-vous faire ?");
@@ -174,8 +172,6 @@ public class Simulation
 
         } while (!finSemaine);
     }
-
-
     public void SimulerJeu(int nombreSemaines)
     {
         Random rng = new Random();
@@ -202,7 +198,7 @@ public class Simulation
             SimulerSemaine();
             RealiserAction();
             Meteo.AppliquerEffet(Jardinier.Terrains);
-                    }
+        }
 
         Console.WriteLine("🎉 Simulation terminée !");
     }
