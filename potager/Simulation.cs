@@ -15,9 +15,9 @@ public class Simulation
 
     public void SimulerSemaine()
     {
-        Console.WriteLine($"\n Semaine {Semaine} - Jardin de {Jardinier} - Argent: {Jardinier.Argent} pièces");
+        Console.WriteLine($"\n Semaine {Semaine} - Jardin de {Jardinier} - Argent: {Jardinier.Argent} pièces\n");
 
-        foreach (var terrain in Jardinier.Terrains) // reduit le remps de la protection 
+        foreach (var terrain in Jardinier.Terrains) // reduit le temps de la protection 
         {
             foreach (var parcelle in terrain.Parcelles)
             {
@@ -34,7 +34,7 @@ public class Simulation
             }
         }
         
-        Meteo.DefinirMeteoAleatoirement(); // météo aléatoire pour la semaine
+        Meteo.DefinirMeteoAleatoirement(); // météo aléatoire pour la semaine d'apres
         Console.WriteLine(Meteo.ToString());
 
         foreach (var terrain in Jardinier.Terrains)
@@ -43,14 +43,23 @@ public class Simulation
             foreach (var parcelle in terrain.Parcelles)
             {
                 terrain.MiseAJourCondition(parcelle); // mise à jour de l'humidité/ensoleillement sur chaque parcelle selon le type de terrain
+                
                 if (parcelle.Plante != null)
                 {
-                    parcelle.Plante.AnalyserSante(Meteo.Temperature, parcelle.HumiditeParcelle, parcelle.EnsoleillementParcelle);
-                    Console.WriteLine($"🌿 Parcelle {parcelle.NumeroParcelle} : {parcelle.Plante}");
+                    parcelle.Plante.VerifierMort(); //verifie si la plante est morte
+                    if (parcelle.Plante.EstMorte)
+                    {
+                        Console.WriteLine($"Parcelle {parcelle.NumeroParcelle} : {parcelle.Plante} est morte");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Parcelle {parcelle.NumeroParcelle} : {parcelle.Plante}");
+                    }
+                    
                 }
                 else
                 {
-                    Console.WriteLine($"🌱 Parcelle {parcelle.NumeroParcelle} sur terrain {terrain.Type} est vide.");
+                    Console.WriteLine($"Parcelle {parcelle.NumeroParcelle} sur terrain {terrain.Type} est vide.");
                 }
 
                 // -------------------------------Pour le mode Urgence----------------------------------
@@ -196,8 +205,17 @@ public class Simulation
         for (int i = 0; i < nombreSemaines; i++)
         {
             SimulerSemaine();
-            RealiserAction();
+            foreach (var parcelle in terrain.Parcelles)
+            {
+                terrain.MiseAJourCondition(parcelle); // mise à jour de l'humidité/ensoleillement sur chaque parcelle selon le type de terrain
+                if (parcelle.Plante != null)
+                {
+                    parcelle.Plante.AnalyserSante(Meteo.Temperature, parcelle.HumiditeParcelle, parcelle.EnsoleillementParcelle);
+                }
+            }
             Meteo.AppliquerEffet(Jardinier.Terrains);
+            RealiserAction();
+            
         }
 
         Console.WriteLine("🎉 Simulation terminée !");
