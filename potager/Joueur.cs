@@ -274,7 +274,7 @@ public class Joueur
             }
         } while ((parcelleChoisi == null));
 
-        if (parcelleChoisi.Plante != null && !parcelleChoisi.Plante.EstMorte && parcelleChoisi.Plante.Croissance >= 100)
+        if (parcelleChoisi.Plante != null && !parcelleChoisi.Plante.EstMorte && parcelleChoisi.Plante.Age>= parcelleChoisi.Plante.TempsDeMaturation)
         {
             Console.WriteLine($"{parcelleChoisi.Plante.Nom} récoltée depuis la parcelle {parcelleChoisi.NumeroParcelle}.");
             int quantiteRecolte = parcelleChoisi.Plante.AvoirQuantiteRecolte();
@@ -420,23 +420,25 @@ public class Joueur
 
         foreach (var terrain in Terrains)
         {
-            Console.WriteLine($" Terrain {terrain.Type}");
+            Console.WriteLine($"► Terrain : {terrain.Type}");
+            Console.WriteLine("----------------------------------------------------------");
+
             foreach (var parcelle in terrain.Parcelles)
             {
-                Console.WriteLine($"   - Parcelle n°{parcelle.NumeroParcelle}:");
+                Console.Write($"  - Parcelle n°{parcelle.NumeroParcelle} | ");
+                Console.Write($"Humidité : {parcelle.HumiditeParcelle}% | ");
+                Console.Write($"Ensoleillement : {parcelle.EnsoleillementParcelle}% | ");
+                Console.WriteLine($"Température : {parcelle.TerrainAssocie.Temperature}°C");
 
                 if (parcelle.Plante == null)
                 {
-                    Console.Write(" Vide");
+                    Console.WriteLine("       → Aucune plante (Parcelle vide)\n");
                 }
                 else
                 {
-                    Console.Write($" {parcelle.Plante.Nom} | Santé : {parcelle.Plante.Sante}% | Croissance : {parcelle.Plante.Croissance}%");
+                    Console.WriteLine($"       → {parcelle.Plante.Nom} | Santé : {parcelle.Plante.Sante}% ");
                 }
-                Console.WriteLine($"       Humidité : {parcelle.HumiditeParcelle}% | Ensoleillement : {parcelle.EnsoleillementParcelle}% | Température : {parcelle.TerrainAssocie.Temperature}°C");
             }
-
-            Console.WriteLine(); // saut de ligne entre les terrains
         }
     }
     public void AfficherSemis()

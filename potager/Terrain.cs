@@ -10,23 +10,25 @@ public abstract class Terrain
     public Terrain(string type)
     {
         Type = type;
-        Humidite = 30;
+        // on initialise l'humidite, la temperature et l'ensoleillement 
+        Humidite = 50;
+        Temperature = 30;
+        Ensoleillement = 60;
+        //On ajoute 3 parcelle lors de la création d'un terrain
         Parcelles = new List<Parcelle>();
         AjouterParcelle();
         AjouterParcelle();
         AjouterParcelle(); // 3 parcelles de base
     }
 
-    
+
     public void AjouterParcelle()
     {
         int numero = Parcelles.Count + 1;
         Parcelles.Add(new Parcelle(numero, this));
     }
 
-     // Méthode virtuelle destinée à être redéfinie dans les sous-classes
-    public virtual void MiseAJourCondition(Parcelle parcelle)
-    {
-
-    }
+    // Méthode absctract destinée à être définie dans les sous-classes
+    public abstract void MiseAJourCondition(Parcelle parcelle);
+    
 }

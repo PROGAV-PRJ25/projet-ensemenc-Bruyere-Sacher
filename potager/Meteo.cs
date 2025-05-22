@@ -10,7 +10,7 @@ public class Meteo
 
     public override string ToString()
     {
-        string message=$"Météo pour la semaine à venir: -Température: {Temperature}°C | -Ensoleillement: {Ensoleillement}% | -Précipitations: {Precipitation} mm ";;
+        string message=$" ☁ Météo pour la semaine à venir ☁: Température: {Temperature}°C | Ensoleillement: {Ensoleillement}% | Précipitations: {Precipitation} mm ";;
         return message;
     }
     public void DefinirMeteoAleatoirement()  //ajuster les tirages au sort

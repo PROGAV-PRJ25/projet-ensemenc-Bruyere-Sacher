@@ -10,7 +10,7 @@ public class PlanteProductionMultiple : Plante
         string description="";
         if (EstMorte==false)
         {
-            description=$"{Nom} | Santé: {Sante}% | Croissance: {Croissance}% | Nombres de produits: {NombreProduit}%";
+            description=$"{Nom} | Santé: {Sante}% | Age: {Age}| Nombres de produits: {NombreProduit}";
         }
         else
         {
@@ -61,7 +61,8 @@ public class PlanteProductionMultiple : Plante
         }
         
         NombreProduit+=conditionsRemplies; //augmenter le  nombre de produits si les conditions sont remplies
-        Age+=conditionsRemplies; // accélerer la croissance si les conditions sont remplies
+        Age+=conditionsRemplies; // accélerer la croissance si les conditions sont rempli
+        Age++;
 
         Sante = Math.Max(Sante, 0); // Si santé inférieur à 0 -> ramener la santé a 0%
         //Si 0 de santé -> plante morte 

@@ -9,7 +9,7 @@ public class PlanteProductionSimple : Plante
         string description="";
         if (EstMorte==false)
         {
-            description=$"{Nom} | Santé: {Sante}% | Croissance: {Croissance}%";
+            description=$"{Nom} | Santé: {Sante}% | Age: {Age}";
         }
         else
         {
