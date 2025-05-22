@@ -54,7 +54,7 @@ public abstract class Plante
         }
         else
         {
-            Sante -= 10;
+            Sante -= 5;
         }
 
         //Humidité
@@ -65,7 +65,7 @@ public abstract class Plante
         }
         else
         {
-            Sante -= 10;
+            Sante -= 5;
         }
 
         //Luminosité
@@ -76,7 +76,7 @@ public abstract class Plante
         }
         else
         {
-            Sante -= 10;
+            Sante -= 5;
         }
 
         if (conditionsRemplies == 0)

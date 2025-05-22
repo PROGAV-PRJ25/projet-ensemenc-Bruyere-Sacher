@@ -436,7 +436,7 @@ public class Joueur
                 }
                 else
                 {
-                    Console.WriteLine($"       → {parcelle.Plante.Nom} | Santé : {parcelle.Plante.Sante}% ");
+                    Console.WriteLine($"       → {parcelle.Plante.Nom} | Santé : {parcelle.Plante.Sante}% | Age : {parcelle.Plante.Age}% ");
                 }
             }
         }

@@ -30,7 +30,7 @@ public class PlanteProductionMultiple : Plante
         }
         else
         {
-            Sante -= 10;
+            Sante -= 5;
         }
 
         //Humidité
@@ -41,7 +41,7 @@ public class PlanteProductionMultiple : Plante
         }
         else
         {
-            Sante -= 10;
+            Sante -= 5;
         }
 
         //Luminosité
@@ -52,7 +52,7 @@ public class PlanteProductionMultiple : Plante
         }
         else
         {
-            Sante -= 10;
+            Sante -= 5;
         }
 
         if (conditionsRemplies==0)
