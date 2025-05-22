@@ -1,25 +1,4 @@
-﻿// //Console.WriteLine("🌿 Bienvenue dans le simulateur de jardinage !");
-// Menu();
-
-// // Affichage des infos initiales
-// Console.WriteLine($"\n👩‍🌾 Joueur {joueur.Nom} avec {joueur.Argent} pièces !");
-// Console.WriteLine("🌱 Semis en stock :");
-// foreach (var semis in joueur.StockSemis)
-// {
-//     Console.WriteLine($"- {semis.NomPlante} x{semis.Quantite}");
-// }
-
-// Console.WriteLine("🌍 Terrains :");
-// foreach (var terrain in joueur.Terrains)
-// {
-//     Console.WriteLine($"- {terrain.Type} avec {terrain.Parcelles.Count} parcelles");
-// }
-
-// // Lancer la simulation pour 5 semaines
-// simulation.SimulerJeu(10);
-
-
-var menu = new MenuDebut();
+﻿var menu = new MenuDebut();
 Partie? partie = menu.AfficherMenu();
 
 if (partie == null)
