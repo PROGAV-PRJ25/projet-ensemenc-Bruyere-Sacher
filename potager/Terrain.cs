@@ -17,14 +17,16 @@ public abstract class Terrain
         AjouterParcelle(); // 3 parcelles de base
     }
 
+    
     public void AjouterParcelle()
     {
         int numero = Parcelles.Count + 1;
         Parcelles.Add(new Parcelle(numero, this));
     }
 
+     // Méthode virtuelle destinée à être redéfinie dans les sous-classes
     public virtual void MiseAJourCondition(Parcelle parcelle)
     {
-        
+
     }
 }

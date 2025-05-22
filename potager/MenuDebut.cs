@@ -1,8 +1,9 @@
 public class MenuDebut
 {
+  
+  //affiche les options et gère le choix de l'utilisateur
   public Partie? AfficherMenu()
   {
-    //Console.Clear();
     AffichageBanniereDebut();
     string? choix = "";
     Console.WriteLine("1. 🌱 Commencer une nouvelle partie");
@@ -28,31 +29,34 @@ public class MenuDebut
       }
     }
     return null; //ne sera jamais atteint, mais nécessaire pour compiler
-    
   }
-  public Partie DemarrerPartie()  //Partie = le type de l’objet que la méthode renvoie
+  
+  // Méthode pour démarrer une nouvelle partie
+  public Partie DemarrerPartie()
   {
     string nom = "";
-
+    // Boucle jusqu'à ce que le nom soit non vide et non composé uniquement d'espaces
     while (string.IsNullOrWhiteSpace(nom)) //évite que l’utilisateur entre une chaîne vide ou juste des espaces.
     {
-        Console.Write("👤 Entre le nom de ton joueur : ");
-        nom = Console.ReadLine() ?? "";
+      Console.Write("👤 Entre le nom de ton joueur : ");
+      nom = Console.ReadLine() ?? "";//utilisation de ?? pour éviter les valeurs null
 
-        if (string.IsNullOrWhiteSpace(nom)) //évite que l’utilisateur entre une chaîne vide ou juste des espaces.
-        {
-            Console.WriteLine("❌ Le nom ne peut pas être vide. Réessaie.");
-        }
+      if (string.IsNullOrWhiteSpace(nom)) //évite que l’utilisateur entre une chaîne vide ou juste des espaces.
+      {
+        Console.WriteLine("❌ Le nom ne peut pas être vide. Réessaie.");
+      }
     }
+    Console.WriteLine("\n 🌿 Bienvenue au Mexique !");
+    //création des objets nécessaires à la partie
     Joueur joueur = new Joueur(nom, 500);
-    Meteo meteo = new Meteo(); 
+    Meteo meteo = new Meteo();
 
     Simulation simulation = new Simulation(joueur, meteo);
-    
+
     return new Partie(joueur, simulation);
   }
 
-
+  // Méthode pour afficher une bannière de bienvenue en ASCII et les infos du projet
   public void AffichageBanniereDebut()
   {
     Console.BackgroundColor = ConsoleColor.Black;

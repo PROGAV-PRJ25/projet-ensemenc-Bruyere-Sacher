@@ -40,6 +40,7 @@ if (partie.Simulation == null)
     Console.WriteLine("❌ Erreur : la simulation est introuvable.");
     return;
 }
+Guide.ReglesJeu();
 
 Joueur joueur = partie.Joueur;
 Simulation simulation = partie.Simulation;
@@ -66,6 +67,5 @@ if (joueur.Terrains != null)
     }
 }
 
-Guide.ReglesJeu();
 
-simulation.SimulerJeu(10); // ou autant de semaines que tu veux
+simulation.SimulerJeu(100); // permet au joueur de faire max 100 semaines
