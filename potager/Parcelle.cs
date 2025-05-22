@@ -20,7 +20,7 @@ public class Parcelle
     }
     public override string ToString()
     {
-        string message=$"%";;
+        string message = $"%"; ;
         return message;
     }
 

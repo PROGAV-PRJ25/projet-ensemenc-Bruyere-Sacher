@@ -12,6 +12,8 @@ public class Urgence
         ProblemeResolu = true;
     }
 
+
+    // Déclenche une urgence aléatoire en fonction de la probabilité
     public bool DeclencherAleatoirement()
     {
         int chance = random.Next(1, 101);
@@ -24,15 +26,17 @@ public class Urgence
             AfficherAlerte();
             return true;
         }
-
         return false;
     }
 
+
+    //Affiche un message d'alerte d'une urgence dans la console
     public void AfficherAlerte()
     {
         Console.WriteLine($"🚨 URGENCE ! : Il y a un problème de type {TypeUrgenceDeclenchee.ToUpper()} avec une gravité de {Gravite}.");
     }
 
+    // Tire aléatoirement un type d’urgence dans une liste des urgences prédéfinie
     public string TypeUrgence()
     {
         string[] typesUrgence = { "Pacari (cochon sauvage)", "Oiseaux", "Grêle" };
@@ -41,17 +45,21 @@ public class Urgence
     }
 
 
+    // Gère la résolution de l’urgence sur une parcelle donnée
     public void Resoudre(Joueur joueur, Parcelle parcelleTouchee, Magasin magasin)
     {
         if (!ProblemeResolu)
         {
             Console.WriteLine($"{TypeUrgenceDeclenchee} est survenue sur la parcelle {parcelleTouchee.NumeroParcelle}.");
 
+            // Si une plante est présente, elle subit des dégâts
             if (parcelleTouchee.Plante != null)
             {
                 int perteDeSante = Gravite * 5;
                 parcelleTouchee.Plante.Sante -= perteDeSante;
+                Console.WriteLine($"La santé de la plante à diminuée, elle est à: {parcelleTouchee.Plante.Sante}%");
 
+                // Si la plante n’a plus de santé, elle meurt   
                 if (parcelleTouchee.Plante.Sante <= 0)
                 {
                     parcelleTouchee.Plante.EstMorte = true;
@@ -62,10 +70,10 @@ public class Urgence
             {
                 Console.WriteLine($"⚠️ La parcelle {parcelleTouchee.NumeroParcelle} ne contient pas de plante.");
             }
-
+            // Propose de protéger le terrain contre l’urgence
             ProtegerTerrain(joueur, parcelleTouchee, magasin);
 
-            // ✅ Protection dure 2 semaines si appliquée
+            //  Protection dure 2 semaines si appliquée
             if (parcelleTouchee.EstProtegee)
             {
                 parcelleTouchee.DureeProtectionRestante = 2;
@@ -76,6 +84,7 @@ public class Urgence
         }
         else
         {
+            // Affiche que le problème a déjà été résolu
             if (parcelleTouchee.Plante != null)
             {
                 Console.WriteLine($"✅ L'urgence a déjà été résolue sur la parcelle {parcelleTouchee.NumeroParcelle}. Santé actuelle : {parcelleTouchee.Plante.Sante}%");
@@ -87,7 +96,7 @@ public class Urgence
         }
     }
 
-
+    // Permet au joueur d’utiliser un outil de protection sur une parcelle
     public void UtiliserOutil(Joueur joueur, Parcelle parcelleTouchee)
     {
         if (joueur.StockOutils.Count == 0)
@@ -96,12 +105,14 @@ public class Urgence
             return;
         }
 
+        // Affiche les outils disponibles
         Console.WriteLine("Quel outil souhaitez-vous utiliser pour protéger le terrain ?");
         for (int i = 0; i < joueur.StockOutils.Count; i++)
         {
             Console.WriteLine($"{i + 1}. {joueur.StockOutils[i].NomOutil} (x{joueur.StockOutils[i].Quantite})");
         }
 
+        // Demande à l’utilisateur de choisir un outil
         Console.WriteLine("Entrez le numéro de l'outil ou tapez '0' pour annuler.");
         string choix = Console.ReadLine()?.ToLower() ?? "";
         int choixOutil = -1;
@@ -111,6 +122,7 @@ public class Urgence
             var outilChoisi = joueur.StockOutils[choixOutil - 1];
 
             string nom = outilChoisi.NomOutil.ToLower();
+            // Si l’outil est un outil de protection reconnu
             if (nom.Contains("bache") || nom.Contains("bâche") || nom.Contains("serre") || nom.Contains("cloture") || nom.Contains("clôture") || nom.Contains("épouvantail") || nom.Contains("epouventail"))
             {
                 ProblemeResolu = true;
@@ -125,12 +137,35 @@ public class Urgence
             }
             else
             {
-                Console.WriteLine("❌ Cet outil ne peut pas être utilisé pour protéger le terrain.");
+                // Si mauvais outil utilisé, la plante meurt si elle existe
+                if (parcelleTouchee.Plante != null)
+                {
+                    parcelleTouchee.Plante.Sante = 0;
+                    parcelleTouchee.Plante.EstMorte = true;
+                    Console.WriteLine("❌ Cet outil ne peut pas être utilisé pour protéger le terrain, votre plante est morte.");
+                }
+                else
+                {
+                    Console.WriteLine("Aucun outil acheté, mais la parcelle est vide.");
+                }
             }
+                
+            
         }
         else if (choix == "0")
         {
-            Console.WriteLine("❌ Vous avez annulé l'utilisation d'un outil.");
+            // En cas d'annulation, la plante meurt si elle est présente
+            if (parcelleTouchee.Plante != null)
+            {
+                parcelleTouchee.Plante.Sante = 0;
+                parcelleTouchee.Plante.EstMorte = true;
+                Console.WriteLine("❌ Vous avez annulé l'utilisation d'un outil, votre plante est morte.");
+            }
+            else
+            {
+                Console.WriteLine("Aucun outil acheté, mais la parcelle est vide.");
+            }
+          
         }
         else
         {
@@ -138,7 +173,7 @@ public class Urgence
         }
     }
 
-
+// Demande au joueur s’il souhaite protéger sa parcelle et gère l’achat d’outil si nécessaire
   private void ProtegerTerrain(Joueur joueur, Parcelle parcelleTouchee, Magasin magasin)
     {
         string reponse = string.Empty;
@@ -170,7 +205,7 @@ public class Urgence
                 if (achatReponse == "oui")
                 {
                     magasin.AcheterOutils();
-
+                    // Vérifie si un outil de protection a été acheté
                     if (joueur.StockOutils.Any(o =>
                         o.NomOutil.ToLower().Contains("bache") ||
                         o.NomOutil.ToLower().Contains("bâche") ||
@@ -184,15 +219,53 @@ public class Urgence
                     }
                     else
                     {
-                        Console.WriteLine("❌ Vous n'avez pas acheté d'outil de protection.");
+                        // Si aucun outil acheté, la plante meurt
+                        if (parcelleTouchee.Plante != null)
+                        {
+                            parcelleTouchee.Plante.Sante = 0;
+                            parcelleTouchee.Plante.EstMorte = true;
+                            Console.WriteLine("❌ Vous n'avez pas acheté d'outil de protection, votre plante est morte.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("❌ Vous n'avez pas acheté d'outil de protection, mais la parcelle est vide.");
+                        }
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Aucun outil acheté.");
+                    // Si aucun outil acheté, la plante meurt
+                    if (parcelleTouchee.Plante != null)
+                    {
+                        parcelleTouchee.Plante.Sante = 0;
+                        parcelleTouchee.Plante.EstMorte = true;
+                        Console.WriteLine("Aucun outil acheté, votre plante est morte.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Aucun outil acheté, mais la parcelle est vide.");
+                    }
                 }
             }
         }
+        else
+        {
+            // Si le joueur refuse de protéger la parcelle, la plante meurt
+            if (parcelleTouchee.Plante != null)
+            {
+                parcelleTouchee.Plante.EstMorte = true;
+                parcelleTouchee.Plante.Sante = 0;
+                Console.WriteLine("Vous n'avez pas voulu protéger votre terrain, votre plante est morte.");
+                Console.WriteLine($"Parcelle {parcelleTouchee.NumeroParcelle} - Santé : {parcelleTouchee.Plante.Sante}% - Morte ? {parcelleTouchee.Plante.EstMorte}");
+
+            }
+            else
+            {
+                Console.WriteLine("Vous n'avez pas voulu protéger le terrain, mais la parcelle est vide.");
+            }
+        }
     }
+        
+    
 
 }

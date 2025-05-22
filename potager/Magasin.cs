@@ -12,6 +12,7 @@ public class Magasin
         PrixParcelle = prixParcelle;
         Joueur = joueur;
 
+        // Liste  des semis vendus dans le magasin
         SemisDisponible = new List<Semis>
         {
             new Semis("Tomate", 3, true),
@@ -26,6 +27,7 @@ public class Magasin
             new Semis("Igname", 4, true)
         };
 
+        // Liste  des objets vendus dans le magasin
         OutilsDisponible = new List<Outils>
         {
             new Outils("Bâche​", 10),
@@ -35,6 +37,7 @@ public class Magasin
         };
     }
 
+    //// Affiche le menu principal du magasin et traite les choix du joueur
     public void Menu()
     {
         int choix;
@@ -50,6 +53,7 @@ public class Magasin
 
             if (!int.TryParse(Console.ReadLine(), out choix)) choix = 0;
 
+            // Exécution de l'action choisie
             switch (choix)
             {
                 case 1:
@@ -74,7 +78,8 @@ public class Magasin
         } while (choix != 5);
         Console.WriteLine();
     }
-
+    
+    // Permet au joueur d'acheter un terrain en fonction d’un type de terrain choisi
     public void AcheterTerrain(int prixTerrain)
     {
         Console.WriteLine("\nQuel type de terrain veux-tu acheter ?");
@@ -97,7 +102,7 @@ public class Magasin
         }
 
         Terrain terrain;
-
+        // Création du type de terrain selon le choix
         switch (choix)
         {
             case 1:
@@ -114,6 +119,7 @@ public class Magasin
                 return;
         }
 
+        // Vérifie si le joueur a assez d'argent
         if (Joueur.Argent >= prixTerrain)
         {
             Joueur.Argent -= prixTerrain;
@@ -126,7 +132,7 @@ public class Magasin
         }
     }
 
-
+    // Permet au joueur de sélectionner un terrain pour y ajouter une nouvelle parcelle
     public void ChoisirEtAcheterParcelle()
     {
         if (Joueur.Terrains.Count == 0)
@@ -167,6 +173,7 @@ public class Magasin
     }
 
 
+    // Ajoute une parcelle à un terrain donné si le joueur a assez d'argent
     public void AcheterParcelle(Terrain terrain, int prixParcelle)
     {
         if (Joueur.Argent >= prixParcelle)
@@ -181,6 +188,7 @@ public class Magasin
         }
     }
 
+    // Permet au joueur d’acheter des semis
     public void AcheterSemis()
     {
         Console.WriteLine("\nQuels semis veux-tu acheter ?");
@@ -221,6 +229,7 @@ public class Magasin
 
         Joueur.Argent -= semisChoisi.PrixAchat;
 
+        // Ajoute le semis au stock du joueur ou augmente la quantité si déjà présent
         bool trouve = false;
         foreach (var semis in Joueur.StockSemis)
         {
@@ -251,7 +260,7 @@ public class Magasin
     }
 
 
-
+     // Permet au joueur d’acheter un outil
     public void AcheterOutils()
     {
         Console.WriteLine("\nQuels outils veux-tu acheter ?");
@@ -292,6 +301,7 @@ public class Magasin
 
         Joueur.Argent -= outilChoisi.PrixAchat;
 
+        // Ajoute l’outil ou augmente la quantité si déjà présent
         bool existeDeja = false;
         foreach (var outil in Joueur.StockOutils)
         {
