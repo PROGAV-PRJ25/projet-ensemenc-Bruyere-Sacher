@@ -324,13 +324,13 @@ public class Joueur
                 return;
             }
 
-        } while (choixNum < 0 || choixNum >= MesRecoltes.Count);
+        } while (choixNum < 0 || choixNum > MesRecoltes.Count);
         Recoltes recolteAVendre = MesRecoltes[choixNum - 1]; //associe la recolte choisi
 
         int quantiteAVendre;
         do
         {
-            Console.WriteLine($"Tu as {recolteAVendre.Quantite} {recolteAVendre.TypePlante} et son prix est de {recolteAVendre.Prix}.");
+            Console.WriteLine($"Tu as {recolteAVendre.Quantite} {recolteAVendre.TypePlante} et son prix est de {recolteAVendre.Prix} pieces.");
             Console.WriteLine($"Combien veux-tu en vendre?");
 
             string? choixQuantite = Console.ReadLine();
@@ -437,7 +437,7 @@ public class Joueur
                 }
                 else
                 {
-                    Console.WriteLine($"       → {parcelle.Plante.Nom} | Santé : {parcelle.Plante.Sante}% | Age : {parcelle.Plante.Age}% ");
+                    Console.WriteLine($"       → {parcelle.Plante.ToString()} ");
                 }
             }
         }
@@ -470,9 +470,17 @@ public class Joueur
     public void AfficherParcelle(Terrain terrain)
     {
         Console.WriteLine($"Voici les parcelles du terrain {terrain.Type}");
-        foreach (var parcelle in terrain.Parcelles)
+        foreach (Parcelle parcelle in terrain.Parcelles)
         {
-            Console.WriteLine($"- Parcelle n°{parcelle.NumeroParcelle} du terrain {terrain.Type}");
+            if (parcelle.Plante==null)
+            {
+                Console.WriteLine($"- Parcelle n°{parcelle.NumeroParcelle} du terrain {terrain.Type} : Vide");
+            }
+            else
+            {
+                Console.WriteLine($"- Parcelle n°{parcelle.NumeroParcelle} du terrain {terrain.Type} : {parcelle.Plante.ToString()}");
+            }
+            
         }
 
     }

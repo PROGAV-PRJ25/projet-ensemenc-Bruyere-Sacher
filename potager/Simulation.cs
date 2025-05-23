@@ -131,17 +131,17 @@ public class Simulation
                         Jardinier.Magasin.Menu();
                         break;
                     case 4:
-                        Jardinier.Vendre();
-                        break;
-                    case 5:
                         if (Jardinier.MesRecoltes.Count == 0)
                         {
-                            Console.WriteLine("Vous n'avez aucune plante à récolter");
+                            Console.WriteLine("Vous n'avez aucune plante à vendre");
                         }
                         else
                         {
-                            Jardinier.Recolter();
+                            Jardinier.Vendre();
                         }
+                        break;
+                    case 5:
+                        Jardinier.Recolter();
                         break;
                     case 6:
                         Jardinier.UtiliserOutil();
@@ -204,15 +204,19 @@ public class Simulation
 
         for (int i = 0; i < nombreSemaines; i++)
         {
-            SimulerSemaine();
-            foreach (var parcelle in terrain.Parcelles)
+            foreach (Terrain terrainAnalyse in Jardinier.Terrains)
             {
-                terrain.MiseAJourCondition(parcelle); // mise à jour de l'humidité/ensoleillement sur chaque parcelle selon le type de terrain
-                if (parcelle.Plante != null)
+                foreach (Parcelle parcelle in terrainAnalyse.Parcelles)
                 {
-                    parcelle.Plante.AnalyserSante(Meteo.Temperature, parcelle.HumiditeParcelle, parcelle.EnsoleillementParcelle);
+                    if (parcelle.Plante != null)
+                    {
+                        parcelle.Plante.AnalyserSante(Meteo.Temperature, parcelle.HumiditeParcelle, parcelle.EnsoleillementParcelle);
+                    }
+                    terrain.MiseAJourCondition(parcelle); // mise à jour de l'humidité/ensoleillement sur chaque parcelle selon le type de terrain
                 }
+                
             }
+            SimulerSemaine();
             Meteo.AppliquerEffet(Jardinier.Terrains);
             RealiserAction();
             

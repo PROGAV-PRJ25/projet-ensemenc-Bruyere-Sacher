@@ -24,7 +24,12 @@ public class PlanteProductionMultiple : Plante
         // Vérification des conditions préférées
         //Temperature
         int conditionsRemplies = 0;
-        if (tempActuelle >= TemperaturePrefere - 3 && tempActuelle <= TemperaturePrefere + 3)
+        if (tempActuelle >= TemperaturePrefere - 2 && tempActuelle <= TemperaturePrefere + 2)// si l'ecart de temperature est très faible, la plante regagne de la vie
+        {
+            Sante += 5;
+            conditionsRemplies++;
+        }
+        else if (tempActuelle >= TemperaturePrefere - 5 && tempActuelle <= TemperaturePrefere + 5)
         {
             conditionsRemplies++;
         }
@@ -35,7 +40,12 @@ public class PlanteProductionMultiple : Plante
 
         //Humidité
         int ecartEau = Math.Abs(BesoinEau - humiditeActuelle);
-        if (ecartEau < 10)
+        if (ecartEau <5)// si l'ecart d'humidité est très faible, la plante regagne de la vie
+        {
+            Sante += 5;
+            conditionsRemplies++;
+        }
+        else if (ecartEau < 10)
         {
             conditionsRemplies++;
         }
@@ -46,7 +56,12 @@ public class PlanteProductionMultiple : Plante
 
         //Luminosité
         int ecartLumiere = Math.Abs(BesoinLumiere - luminositeActuelle);
-        if (ecartLumiere < 10)
+        if (ecartLumiere <5) // si l'ecart de l'ensoleillement est très faible, la plante regagne de la vie
+        {
+            Sante += 5;
+            conditionsRemplies++;
+        }
+        else if (ecartLumiere < 10)
         {
             conditionsRemplies++;
         }
@@ -55,22 +70,31 @@ public class PlanteProductionMultiple : Plante
             Sante -= 5;
         }
 
-        if (conditionsRemplies==0)
+        if (conditionsRemplies == 0)
         {
             Sante = 0;
         }
-        
+
         NombreProduit+=conditionsRemplies; //augmenter le  nombre de produits si les conditions sont remplies
-        Age+=conditionsRemplies; // accélerer la croissance si les conditions sont rempli
+        Age += conditionsRemplies; // accélerer la croissance si les conditions sont remplies
         Age++;
 
-        Sante = Math.Max(Sante, 0); // Si santé inférieur à 0 -> ramener la santé a 0%
-        //Si 0 de santé -> plante morte 
-        if (Sante==0)
+        // ajuster sante si inferieur à 0 ou supérieur a 100
+        if (Sante > 100)
         {
-            EstMorte=true;
+            Sante = 100;
+        }
+        if (Sante < 0)
+        {
+            Sante = 0;
+        }
+        //Si 0 de santé -> plante morte 
+        if (Sante == 0)
+        {
+            EstMorte = true;
         }
     }
+    
     public override int AvoirQuantiteRecolte()
     {
         return NombreProduit;
