@@ -26,24 +26,5 @@ Simulation simulation = partie.Simulation;
 
 Console.WriteLine($"\n👩‍🌾 Joueur {joueur.Nom} avec {joueur.Argent} pièces !");
 
-// if (joueur.StockSemis != null)
-// {
-//     foreach (var semis in joueur.StockSemis)
-//     {
-//         Console.WriteLine($"- {semis.NomPlante} x{semis.Quantite}");
-//     }
-// }
-
-// Console.WriteLine("🌍 Terrains :");
-
-// if (joueur.Terrains != null)
-// {
-//     foreach (var terrain in joueur.Terrains)
-//     {
-//         string type = terrain.Type ?? "Type inconnu";
-//         Console.WriteLine($"- {type} avec {terrain.Parcelles?.Count ?? 0} parcelles");
-//     }
-// }
-
 
 simulation.SimulerJeu(100); // permet au joueur de faire max 100 semaines
