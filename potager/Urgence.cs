@@ -4,7 +4,7 @@ public class Urgence
     public int Gravite { get; set; } // Échelle de 1 à 5
     public bool ProblemeResolu { get; set; }
     public Random random = new Random();
-    public int ChanceDeSurvenir { get; set; } = 100; // 40% de chance d'avoir une urgence
+    public int ChanceDeSurvenir { get; set; } = 20; // 20% de chance d'avoir une urgence
     public int SemainesNonResolue { get; set; } = 0;
 
     public Urgence()

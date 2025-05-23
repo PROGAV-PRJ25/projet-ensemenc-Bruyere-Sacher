@@ -136,7 +136,7 @@ public class Simulation
                     case 5:
                         if (Jardinier.MesRecoltes.Count == 0)
                         {
-                            Console.WriteLine("Vous n'avez aucune récoltes à vendre");
+                            Console.WriteLine("Vous n'avez aucune plante à récolter");
                         }
                         else
                         {

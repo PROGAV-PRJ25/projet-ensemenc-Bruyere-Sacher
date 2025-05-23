@@ -430,6 +430,7 @@ public class Joueur
                 Console.Write($"Ensoleillement : {parcelle.EnsoleillementParcelle}% | ");
                 Console.WriteLine($"Température : {parcelle.TerrainAssocie.Temperature}°C");
 
+                // Affiche les infos sur la plante si présente
                 if (parcelle.Plante == null)
                 {
                     Console.WriteLine("       → Aucune plante (Parcelle vide)\n");
@@ -441,6 +442,8 @@ public class Joueur
             }
         }
     }
+
+    // Affiche les semis disponibles dans le stock du joueur
     public void AfficherSemis()
     {
         if (StockSemis.Count == 0)
@@ -488,7 +491,7 @@ public class Joueur
             Console.WriteLine("❗ Tu n'as aucun outil dans ton stock.");
             return;
         }
-
+        // Affiche la liste des outils disponibles
         Console.WriteLine("🧰 Voici les outils disponibles dans ton stock :");
         for (int i = 0; i < StockOutils.Count; i++)
         {
@@ -525,7 +528,7 @@ public class Joueur
             return;
         }
 
-        // Sélection de la parcelle
+        // Choix de la parcelle sur laquelle utiliser l’outil
         Console.WriteLine("\n🌱 Choisis une parcelle sur laquelle utiliser l'outil :");
         Dictionary<int, Parcelle> parcellesDisponibles = new Dictionary<int, Parcelle>();
         int compteur = 1;
@@ -545,7 +548,7 @@ public class Joueur
             Console.WriteLine("❗ Tu n'as aucune parcelle disponible.");
             return;
         }
-
+        // Sélection d'une parcelle valide
         int choixParcelle = -1;
         string saisieParcelle = string.Empty;
 

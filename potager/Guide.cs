@@ -18,7 +18,7 @@ public class Guide
 
     public static void ReglesJeu()
     {
-        Console.WriteLine("📘 RÈGLES DU JEU – Simulateur de Potager");
+        Console.WriteLine("\n📘 RÈGLES DU JEU – Simulateur de Potager");
         Console.WriteLine("\n🌱 Dans ce jeu, tu dois t'occuper de ton potager, pour cela tu peux planter, arroser, acheter et vendre tes récoles.");
         Console.WriteLine("\n Tu ne peux planter des semis que sur leur terrains favoris!");
         Console.WriteLine("\n Mais attention ! Si toutes les conditions préférées (ensoleillement, précipitation...) des plantes ne sont pas respectées, la plante meurt");
