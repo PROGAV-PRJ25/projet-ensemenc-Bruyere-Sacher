@@ -48,7 +48,7 @@ public class MenuDebut
     }
     Console.WriteLine("\n 🌿 Bienvenue au Mexique !");
     //création des objets nécessaires à la partie
-    Joueur joueur = new Joueur(nom, 500);
+    Joueur joueur = new Joueur(nom, 200);
     Meteo meteo = new Meteo();
 
     Simulation simulation = new Simulation(joueur, meteo);
