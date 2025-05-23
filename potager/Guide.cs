@@ -6,9 +6,9 @@ public class Guide
         Console.WriteLine("\n📗 Liste des plantes et leurs terrains préférés :\n");
         Console.WriteLine("🍅 Tomate           → Terrain volcanique | 23°C | Humidité: 90% | Ensoleillement: 90% | Age mure: 6 ");
         Console.WriteLine("🌶️ Piment           → Terrain volcanique | 25°C | Humidité: 50% | Ensoleillement: 90% | Age mure: 7");
-        Console.WriteLine("🥑 Avocat           → Terrain volcanique | 25°C | Humidité: 70% | Ensoleillement: 90% | Age mure: 60");
+        Console.WriteLine("🥑 Avocat           → Terrain volcanique | 25°C | Humidité: 70% | Ensoleillement: 90% | Age mure: 30");
         Console.WriteLine("🌵 Nopale (Cactus)  → Terrain désertique | 30°C | Humidité: 20% | Ensoleillement: 90% | Age mure: 13");
-        Console.WriteLine("🌵 Agave            → Terrain désertique | 35°C | Humidité: 10% | Ensoleillement: 90% | Age mure: 100");
+        Console.WriteLine("🌵 Agave            → Terrain désertique | 35°C | Humidité: 10% | Ensoleillement: 90% | Age mure: 50");
         Console.WriteLine("🌺 Fleurs Tithonia  → Terrain désertique | 35°C | Humidité: 20% | Ensoleillement: 90% | Age mure: 6");
         Console.WriteLine("🌱 Haricot          → Terrain désertique | 23°C | Humidité: 10% | Ensoleillement: 90% | Age mure: 6");
         Console.WriteLine("🍉 Pastèque         → Terrain tropical | 30°C | Humidité: 90% | Ensoleillement: 90% | Age mure: 8");
